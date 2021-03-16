@@ -2,11 +2,27 @@ import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import Button from "../components/Button.js";
 
-export function FirstLogInAdmin() {
+export function FirstLogInAdmin({navigation}) {
     return (
-        <Text>First Log In Admin</Text>
+        <View style={styles.container}>
+            <Text>First Log-In Admin:</Text>
+            <Button 
+                handleClick={() =>
+                    navigation.navigate('ManagementConsole')
+                }
+                label="Create"
+            />
+        </View>
     );
   }
   
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });

@@ -3,7 +3,7 @@
 // and also coordinate with the database about what data to query
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,9 +20,9 @@ import { AddEventAdmin } from './screens/AddEventAdmin';
 import { UserConsole } from './screens/UserConsole';
 import { FirstLogInUser } from './screens/FirstLogInUser';
 import { RequestRoomUser } from './screens/RequestRoomUser';
-import { SignUpScreen } from './screens/SignUpScreen'
-import { KioskMain } from './screens/KioskMain'
-import { KioskSetUp } from './screens/KioskSetUp'
+import { SignUpScreen } from './screens/SignUpScreen';
+import { KioskMain } from './screens/KioskMain';
+import { KioskSetUp } from './screens/KioskSetUp';
 
 export default function App() {
   return (
