@@ -27,19 +27,29 @@ import { KioskSetUp } from './screens/KioskSetUp';
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LogInScreen">
-        <Stack.Screen name="LogInScreen" component={LogInScreen} />
-        <Stack.Screen name="ManagementConsole" component={ManagementConsole} />
-        <Stack.Screen name="FirstLogInAdmin" component={FirstLogInAdmin} />
-        <Stack.Screen name="EditCalendarsAdmin" component={EditCalendarsAdmin} />
-        <Stack.Screen name="CheckRequestsAdmin" component={CheckRequestsAdmin} />
-        <Stack.Screen name="AddEventAdmin" component={AddEventAdmin} />
-        <Stack.Screen name="UserConsole" component={UserConsole} />
-        <Stack.Screen name="FirstLogInUser" component={FirstLogInUser} />
-        <Stack.Screen name="RequestRoomUser" component={RequestRoomUser} />
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-        <Stack.Screen name="KioskMain" component={KioskMain} />
-        <Stack.Screen name="KioskSetUp" component={KioskSetUp} />
+      <Stack.Navigator 
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: 'red',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+        initialRouteName="LogInScreen">
+        <Stack.Screen name="LogInScreen" component={LogInScreen} options={{ title: 'Conference Room Management System' }}/>
+        <Stack.Screen name="ManagementConsole" component={ManagementConsole} options={{ title: 'Management Console' }}/>
+        <Stack.Screen name="FirstLogInAdmin" component={FirstLogInAdmin} options={{ title: 'Welcome New Administrator' }}/>
+        <Stack.Screen name="EditCalendarsAdmin" component={EditCalendarsAdmin} options={{ title: 'Edit Calendars' }}/>
+        <Stack.Screen name="CheckRequestsAdmin" component={CheckRequestsAdmin} options={{ title: 'Check Room Requests' }}/>
+        <Stack.Screen name="AddEventAdmin" component={AddEventAdmin} options={{ title: 'Add New Event' }}/>
+        <Stack.Screen name="UserConsole" component={UserConsole} options={{ title: 'User Console' }}/>
+        <Stack.Screen name="FirstLogInUser" component={FirstLogInUser} options={{ title: 'Welcome New User' }} />
+        <Stack.Screen name="RequestRoomUser" component={RequestRoomUser} options={{ title: 'Request Conference Room' }}/>
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ title: 'Sign-Up' }}/>
+        <Stack.Screen name="KioskMain" component={KioskMain} options={{ title: 'Kiosk Mode' }}/>
+        <Stack.Screen name="KioskSetUp" component={KioskSetUp} options={{ title: 'Kiosk Set-Up' }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
