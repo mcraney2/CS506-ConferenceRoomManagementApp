@@ -3,18 +3,21 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from "../components/Button.js";
-
+import RoomRequestList from "../components/RoomRequestList"
 export function CheckRequestsAdmin({navigation}) {
     return (
+      <>
         <View style={styles.container}>
-            <Text>Room Requests</Text>
-            <Button 
-                handleClick={() =>
-                    navigation.navigate('ManagementConsole')
-                }
-                label="Exit"
-            />
+            <RoomRequestList/>
+            
         </View>
+        <Button 
+        handleClick={() =>
+            navigation.navigate('ManagementConsole')
+        }
+        label="Exit"
+    />
+    </>
     );
   }
   
