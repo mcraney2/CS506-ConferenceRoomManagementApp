@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 import json
 from rest_framework.decorators import api_view
+import string
+import random
 
 # login authentication
 # "room_mgmt/login/"
@@ -25,13 +27,13 @@ def login(request):
             "new":False,
         }
         data = JSONParser().parse(request)
-        print(data)
+        # print(data)
         user = authenticate(username=data['username'], password=data['password'])
-        print(user)
         if user is not None:  # A backend authenticated the credentials
             response["authenticated"]=True       
             try:
                 admin = user.admin
+                print(admin)
                 try: 
                     group = admin.group_set.objects.filter(id=1)
                     return JsonResponse(response,status=201)
@@ -58,8 +60,10 @@ def signup(request):
     if request.method == 'POST':
         response = {"created":False}
         data = JSONParser().parse(request)  # TODO: is frontend/backend that checks the 2 parrwords match or not
+        # print(User.objects.all())
         try:
-            user = User.objects.get(username=data["username"])  # username already exists'
+            User.objects.get(username=data["username"])  # username already exists'
+            # print(User.objects.all())
             return JsonResponse(response, status=201)
         except: # no user exists
             user = User.objects.create_user(username=data['username'], password=data['password'])
@@ -67,35 +71,51 @@ def signup(request):
                 response['created']=True
                 return JsonResponse(response, status=201)
             else:
-                admin = Admin.objects.create(user=user)
+                print(type(user))
+                admin = Admin.objects.create(user=User.objects.get(username=data['username']))
                 admin.save()
+                print(admin.user)
+                print(user.admin)
                 response['created'] = True
                 return JsonResponse(response, status=201)
 
-# # TODO: new admin creates a group
-# @api_view(['POST'])
-# def admin_create_group(request):
-#     if request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         # TODO: generate random group code
-#         # TODO: call serlizer
-#         # TODO:
-        
-
-# # TODO: admin adds a conference room
-# @api_view(['POST'])
-# def admin_add_confroom(request):
-#     if request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         # TODO: call serlizer
+# new admin creates a group
+# "room_mgmt/admin/create_group/"
+# request format: {"groupname","group1","manager":"ruisu_admin"}  
+# response format: {"groupname","group1","manager":"ruisu_admin","groupcode":"LLQIGOBKRYRCPAT"} 
+@api_view(['POST'])
+def admin_create_group(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        manager = Admin.objects.get(user=User.objects.get(username=data['manager']))
+        data['groupcode'] = ''.join(random.choice(string.ascii_uppercase) for i in range(15))
+        group = Group.objects.create(groupname=data['groupname'],groupcode=data['groupcode'],manager=manager)
+        group.save()
+        return JsonResponse(data, status=400)
 
 
-# # TODO: admin goes to the request page
-# @api_view(['GET'])
-# def admin_view_requests(request):
-#     if request.method == 'GET':
-#         data = JSONParser().parse(request)
-#         # TODO: get a list of requets, sorting by the request date and time
+# admin adds a conference room
+# "room_mgmt/admin/add_room/"
+# request format: {"groupcode":"LLQIGOBKRYRCPAT","roomnumber":"1123"}
+# response format: {"groupcode":"LLQIGOBKRYRCPAT","roomnumber":"1123","roomid"="id"}
+@api_view(['POST'])
+def admin_add_room(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        group = Group.objects.get(groupcode=data['groupcode'])
+        room = Room.objects.create(roomnumber=data['roomnumber'], group=group)
+        room.save()
+        data["roomid"] = room.id
+        return JsonResponse(data, status=400)
+
+
+# TODO: admin goes to the request page
+@api_view(['GET'])
+def admin_view_requests(request):
+    if request.method == 'GET':
+        requests = Request.objects.filter(processed=False,)
+
+        # TODO: get a list of requets, sorting by the request date and time
         
 
 # # TODO: admin approves/rejects a request

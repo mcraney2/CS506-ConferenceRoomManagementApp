@@ -9,7 +9,7 @@ class Group(models.Model):
     groupname = models.CharField(max_length=100,blank=False)
     groupcode = models.CharField(max_length=100,unique = True,blank=False) # automatically generated
     manager = models.ForeignKey(Admin, on_delete=models.CASCADE,blank=False)
-    user = models.ManyToManyField(User)
+    user = models.ManyToManyField(User,blank=True,null=True)
 
 class Room(models.Model):
     roomnumber = models.CharField(max_length=100,blank=False)
