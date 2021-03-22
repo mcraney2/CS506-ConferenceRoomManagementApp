@@ -8,6 +8,15 @@ import TextBox from "../components/TextBox.js"
 export function LogInScreen({navigation}) {
     return (
         <View style={styles.container}>
+            <Text>Log-In</Text>
+            <Text>Goes to 1st user screen. Delete later.</Text>
+            <Button
+                handleClick={() =>
+                    navigation.navigate('FirstLogInUser')
+                }
+                label="First User Screen (FOR TESTING)"
+            />
+                  
             <View style={styles.LogInContainer}>
                 <Text style={styles.textSty}>Log-In</Text>
                 <TextBox 

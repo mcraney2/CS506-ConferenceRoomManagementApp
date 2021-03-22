@@ -8,6 +8,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+sftp.json
 
 # macOS
 .DS_Store
