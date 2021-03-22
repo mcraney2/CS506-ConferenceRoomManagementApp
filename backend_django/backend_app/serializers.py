@@ -18,7 +18,7 @@ class GroupSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only = True)
     class Meta:
         model = Group
-        fields = ['groupname', 'groupcode', 'managername','user'] 
+        fields = ['groupname', 'groupcode', 'managername', 'user'] 
 
 class RoomSerializer(serializers.ModelSerializer):
     groups = serializers.StringRelatedField(source='group.groupname', read_only=True)
@@ -32,16 +32,16 @@ class DailyCalendarSerializer(serializers.ModelSerializer):
         fields = '__all__'  
 
 class EventSerializer(serializers.ModelSerializer):
-    roomId = serializers.CharRelatedField(source='room.roomnumber', read_only=True)
+    roomId = serializers.CharField(source='room.roomnumber', read_only=True)
     admin = serializers.StringRelatedField(source='creator', read_only=True)
-    dates = serializers.DateRelatedField(source='date', read_only=True)
+    dates = serializers.StringRelatedField(source='date', read_only=True)
     class Meta:
         model = Event
         fields = '__all__'  
 
 class RequestSerializer(serializers.ModelSerializer):
     requestors = serializers.ReadOnlyField(source='requestor')
-    roomId = serializers.CharRelatedField(source='room.roomnumber', read_only=True)
+    roomId = serializers.CharField(source='room.roomnumber', read_only=True)
     conflicts = EventSerializer(read_only = True)
     class Meta:
         model = Request
