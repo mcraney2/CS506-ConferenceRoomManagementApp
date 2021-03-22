@@ -136,12 +136,12 @@ def admin_manage_event(request):
 def admin_create_events(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        admins = Admin.object.all()
-        serializer = EventSerializer(admins, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+        room = Room.objects.get(roomnumber=data['roomnumber'])
+        manager = Admin.objects.get(user=User.objects.get(username=data['manager']))
+        date = DailyCalendar.objects.get(date=data['date'])
+        event = Event.objects.create(eventname=data['eventname'],roomnumber=room,creator=manager,date=date,startime=data['startime'],endtime=data['endtime'])
+        event.save()
+        return JsonResponse(data, status=201)
 
 
 # TODO: new user joins a group'
@@ -168,12 +168,11 @@ def user_join_group(request):
 def user_send_request(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        users = User.object.all()
-        serializer = RequestSerializer(users, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+        requestor = User.object.get(username=data['username'])
+        room = Room.objects.get(roomnumber=data['roomnumber'])
+        # todo: conflicts
+        request = Request.objects.create(requestor=requestor,room=room,startime=data['startime'],endtime=data['endtime'],requesttime=data['requesttime'],repeat=data['repeat'],processed=data['processed'],approved=data['approved'])
+        return JsonResponse(serializer.data, status=201)
 
 
 # # TODO: Kiosk
