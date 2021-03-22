@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Admin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,blank=False)
-    adminID = models.CharField(max_length=100,blank=False)
+    # adminid = models.CharField(max_length=100,blank=False)
 
 class Group(models.Model):
     groupname = models.CharField(max_length=100,blank=False)

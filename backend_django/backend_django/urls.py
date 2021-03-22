@@ -5,5 +5,5 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # path('backend_app/',include('backend_app.urls')),
+    path('room_mgmt/',include('backend_app.urls')),
 ]
