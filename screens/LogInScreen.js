@@ -14,6 +14,13 @@ export function LogInScreen({navigation}) {
                 }
                 label="Log-In"
             />
+            <Text>Goes to 1st user screen. Delete later.</Text>
+            <Button
+                handleClick={() =>
+                    navigation.navigate('FirstLogInUser')
+                }
+                label="First User Screen (FOR TESTING)"
+            />
             <Text>New User</Text>
             <Button 
                 handleClick={() =>
