@@ -1,4 +1,4 @@
-  // ./components/TextBox.js
+// ./components/TextBox.js
 import React, { useState } from "react";
 import { TextInput, View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
