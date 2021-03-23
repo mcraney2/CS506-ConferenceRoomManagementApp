@@ -23,10 +23,10 @@ class Event(models.Model):
     room = models.ForeignKey(Room,blank=False,null=True,on_delete=models.SET_NULL)
     creator = models.ForeignKey(User,blank=False,null=True,on_delete=models.SET_NULL)
     # TODO: specify format, and default setting
-    date = models.ForeignKey(DailyCalendar,blank=False,null=True,on_delete=models.SET_NULL)
+    date = models.ForeignKey(DailyCalendar,blank=True,null=True,on_delete=models.SET_NULL)
     startime = models.TimeField(blank=False)  
     endtime = models.TimeField(blank=False)
-     
+    
     # TODO: add repeat later ('none/daily/weekly/monthly')
     # TODO: sorting method
 

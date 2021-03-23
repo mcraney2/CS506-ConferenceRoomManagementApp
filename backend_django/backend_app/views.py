@@ -17,14 +17,14 @@ import random
 # login authentication
 # "room_mgmt/login/"
 # request format: {"username": "ruisu","password":"zrs12345"}
-# response format: response = {"authenticated": False,"user": False,"new":False,}
+# response format: response = {"authenticated": False,"user": False,"new":False,"userid":"id"}
 @api_view(['GET'])
 def login(request):
     if request.method == 'GET':
         response = {
             "authenticated": False,
             "user": False,
-            "new":False,
+            "new": False,
         }
         data = JSONParser().parse(request)
         # print(data)
@@ -33,7 +33,7 @@ def login(request):
             response["authenticated"]=True       
             try:
                 admin = user.admin
-                print(admin)
+                response["userid"] = user.id
                 try: 
                     group = admin.group_set.objects.filter(id=1)
                     return JsonResponse(response,status=201)
@@ -41,7 +41,8 @@ def login(request):
                     response["new"]=True
                     return JsonResponse(response,status=201)
             except:
-                response["user"]=True
+                response["user"] = True
+                response["userid"] = user.id
                 try: 
                     group = user.group_set.objects.filter(id=1)
                     return JsonResponse(response,status=201)
@@ -91,7 +92,7 @@ def admin_create_group(request):
         data['groupcode'] = ''.join(random.choice(string.ascii_uppercase) for i in range(15))
         group = Group.objects.create(groupname=data['groupname'],groupcode=data['groupcode'],manager=manager)
         group.save()
-        return JsonResponse(data, status=400)
+        return JsonResponse(data, status=201)
 
 
 # admin adds a conference room
@@ -109,14 +110,15 @@ def admin_add_room(request):
         return JsonResponse(data, status=400)
 
 
-# TODO: admin goes to the request page
+# TODO: test needed
+# admin goes to the request page
+# "room_mgmt/admin/requests/"
+# response format: json array
 @api_view(['GET'])
 def admin_view_requests(request):
     if request.method == 'GET':
-        requests = Request.objects.filter(processed=False,)
-
-        # TODO: get a list of requets, sorting by the request date and time
-        
+        requests = Request.objects.filter(processed=False).order_by('-requesttime')
+        return JsonResponse(requests, status=400)
 
 # # TODO: admin approves/rejects a request
 # @api_view(['PUT','POST'])
@@ -141,12 +143,16 @@ def admin_view_requests(request):
 #     if request.method == 'DELETE': # TODO: delte an event
        
 
-# # TODO: admin creates events
-# @api_view(['POST'])
-# def admin_create_events(request):
-#     if request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         # TODO: call serlizer
+# TODO: admin creates events
+# '%m/%d/%y %H:%M',        # 
+# request format: {"eventname":"a conference","roomid":"1",creator:"admin_name",startime:"10/25/21 14:30",endtime:"10/25/21 16:30"}
+@api_view(['POST'])
+def admin_create_events(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        room = Room.objects.get(id=data["roomid"])
+        creator = Room.objects.get(id=data["roomid"])
+        # TODO: call serlizer
 
 
 # # TODO: new user joins a group'
