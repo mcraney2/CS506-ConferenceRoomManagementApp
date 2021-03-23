@@ -13,6 +13,7 @@ import json
 from rest_framework.decorators import api_view
 import string
 import random
+import datetime
 
 # login authentication
 # "room_mgmt/login/"
@@ -107,7 +108,7 @@ def admin_add_room(request):
         room = Room.objects.create(roomnumber=data['roomnumber'], group=group)
         room.save()
         data["roomid"] = room.id
-        return JsonResponse(data, status=400)
+        return JsonResponse(data, status=201)
 
 
 # TODO: test needed
@@ -118,7 +119,7 @@ def admin_add_room(request):
 def admin_view_requests(request):
     if request.method == 'GET':
         requests = Request.objects.filter(processed=False).order_by('-requesttime')
-        return JsonResponse(requests, status=400)
+        return JsonResponse(requests, status=210)
 
 # # TODO: admin approves/rejects a request
 # @api_view(['PUT','POST'])
@@ -144,15 +145,37 @@ def admin_view_requests(request):
        
 
 # TODO: admin creates events
-# '%m/%d/%y %H:%M',        # 
-# request format: {"eventname":"a conference","roomid":"1",creator:"admin_name",startime:"10/25/21 14:30",endtime:"10/25/21 16:30"}
+# TODO: add feature of supporting repeated events
+# "room_mgmt/admin/create_events/"
+# time format '%m/%d/%y %H:%M',        # 
+# request format: {"eventname":"a conference","roomnumber":"123","creator":"admin_name","starttime":"10/25/21 14:30","endtime":"10/25/21 16:30","repeat":"none"}
+# response format: {"eventid":"1"}
 @api_view(['POST'])
 def admin_create_events(request):
+    print(request)
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        room = Room.objects.get(id=data["roomid"])
-        creator = Room.objects.get(id=data["roomid"])
-        # TODO: call serlizer
+        print(data)
+        room = Room.objects.get(roomnumber=data["roomnumber"])
+        creator = Admin.objects.get(user=User.objects.get(username=data['creator']))
+        starttime = datetime.datetime.strptime(data['starttime'], '%Y-%m-%d %H:%M')
+        endtime = datetime.datetime.strptime(data['endtime'], '%Y-%m-%d %H:%M')
+        date = starttime.strftime("%Y-%m-%d")
+
+        try:
+            dailyCalendar = DailyCalendar.objects.get(date=date)
+        except:
+            dailyCalendar = DailyCalendar.objects.create(date=date)
+            dailyCalendar.save()
+        
+        event = Event.objects.create(eventname=data["eventname"], room=room, creator=creator, date=dailyCalendar, starttime=starttime, endtime=endtime)
+        event.save()
+
+        try:
+            Event.objects.get(id=event.id)
+            return JsonResponse({"eventid":event.id}, status=201)
+        except:
+            return JsonResponse(data,status=400)
 
 
 # # TODO: new user joins a group'

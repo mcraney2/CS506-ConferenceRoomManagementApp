@@ -12,19 +12,19 @@ class Group(models.Model):
     user = models.ManyToManyField(User,blank=True,null=True)
 
 class Room(models.Model):
-    roomnumber = models.CharField(max_length=100,blank=False)
+    roomnumber = models.CharField(max_length=100,blank=False,unique=True)
     group = models.ForeignKey(Group,blank=False,null=True,on_delete=models.SET_NULL)
 
 class DailyCalendar(models.Model):
-    date = models.DateField(blank=False)
+    date = models.DateField(blank=False,unique=True)
 
 class Event(models.Model):
     eventname = models.CharField(max_length=250,blank=False)
     room = models.ForeignKey(Room,blank=False,null=True,on_delete=models.SET_NULL)
-    creator = models.ForeignKey(User,blank=False,null=True,on_delete=models.SET_NULL)
+    creator = models.ForeignKey(Admin,blank=False,null=True,on_delete=models.SET_NULL)
     # TODO: specify format, and default setting
     date = models.ForeignKey(DailyCalendar,blank=True,null=True,on_delete=models.SET_NULL)
-    startime = models.TimeField(blank=False)  
+    starttime = models.TimeField(blank=False)  
     endtime = models.TimeField(blank=False)
     
     # TODO: add repeat later ('none/daily/weekly/monthly')
