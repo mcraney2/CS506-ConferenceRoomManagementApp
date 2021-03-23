@@ -56,7 +56,7 @@ def login(request):
 # create new user account
 # "room_mgmt/signup/"
 # request format: {"username": "ruisu","password":"zrs12345", "user":"True"}
-# response format: {"created":False}
+# response format: {"created":False,"userid":"id","adminid":"id"}
 @api_view(['POST'])
 def signup(request):
     if request.method == 'POST':
@@ -69,22 +69,22 @@ def signup(request):
             return JsonResponse(response, status=201)
         except: # no user exists
             user = User.objects.create_user(username=data['username'], password=data['password'])
+            response['userid'] = user.id
             if data["user"] is True:
-                response['created']=True
+                response['created'] = True
+                response['adminid'] = None
                 return JsonResponse(response, status=201)
             else:
-                print(type(user))
                 admin = Admin.objects.create(user=User.objects.get(username=data['username']))
                 admin.save()
-                print(admin.user)
-                print(user.admin)
                 response['created'] = True
+                response['adminid'] = admin.id
                 return JsonResponse(response, status=201)
 
 # new admin creates a group
 # "room_mgmt/admin/create_group/"
 # request format: {"groupname","group1","manager":"ruisu_admin"}  
-# response format: {"groupname","group1","manager":"ruisu_admin","groupcode":"LLQIGOBKRYRCPAT"} 
+# response format: {"groupname","group1","manager":"ruisu_admin","groupcode":"LLQIGOBKRYRCPAT","groupid":"groupid"} 
 @api_view(['POST'])
 def admin_create_group(request):
     if request.method == 'POST':
@@ -93,7 +93,11 @@ def admin_create_group(request):
         data['groupcode'] = ''.join(random.choice(string.ascii_uppercase) for i in range(15))
         group = Group.objects.create(groupname=data['groupname'],groupcode=data['groupcode'],manager=manager)
         group.save()
-        return JsonResponse(data, status=201)
+        try:
+            data['groupid'] = group.id
+            return JsonResponse(data, status=201)
+        except:
+            return JsonResponse({"error":"unable to create group"}, status=400)
 
 
 # admin adds a conference room
@@ -111,23 +115,67 @@ def admin_add_room(request):
         return JsonResponse(data, status=201)
 
 
-# TODO: test needed
-# admin goes to the request page
-# "room_mgmt/admin/requests/"
-# response format: json array
+# admin view the request page
+# "room_mgmt/admin/requests/view/"
+# request format: {"adminid":"adminid","groupid":"groupid"}
+# response format: "requestlist":requests_list}
 @api_view(['GET'])
 def admin_view_requests(request):
     if request.method == 'GET':
-        requests = Request.objects.filter(processed=False).order_by('-requesttime')
-        return JsonResponse(requests, status=210)
+        requests = Request.objects.filter(processed=False)
+        print(requests)
+        requests = requests.order_by('-requesttime')
+        requests_list = []
+        for room_request in requests:
+            conflict_list = []
+            for conflict in room_request.conflict.all():
+                conflict_list.append(str(conflict))
+            request_dict = {
+                "name": room_request.name,
+                "reason": room_request.reason,
+                "requester": str(room_request.requester),
+                "room": str(room_request.room),
+                "starttime": room_request.starttime,
+                "endtime": room_request.endtime,
+                "requesttime": room_request.requesttime,
+                "repeat": room_request.repeat,
+                "conflict": conflict_list,
+                "requestid": room_request.id,
+            }
+            requests_list.append(request_dict)
+        return JsonResponse({"requestlist":requests_list}, status=210)
 
-# # TODO: admin approves/rejects a request
-# @api_view(['PUT','POST'])
-# def admin_process_request(request):
-#     if request.method == 'PUT':  # admin rejects a request -> update request 
-#         data = JSONParser().parse(request)
-#     if request.method == 'PUT':  # admin aprrove a request -> update request and create corresponding events
-#         data = JSONParser().parse(request)
+# TODO: admin approves/rejects a request
+# TODO: check is admin has access to such request 
+# "room_mgmt/admin/requests/process/"
+# request format: {"adminid":"adminid","requestid":"requestid"}
+# resposne format: {"requestid":"room_request.id"} or {"eventid":"event.id"}
+@api_view(['PUT','POST'])
+def admin_process_request(request):
+    if request.method == 'PUT':  # admin rejects a request -> update request 
+        data = JSONParser().parse(request)
+        room_request = Request.objects.get(id=data['requestid'])
+        room_request.processed = True
+        room_request.approved = False
+        room_request.save(update_fields=['processed','approved'])
+        return JsonResponse({"requestid":room_request.id,"processed":room_request.processed,"approved":room_request.approved}, status=210)
+    if request.method == 'POST':  # admin aprrove a request -> update request and create corresponding events
+        data = JSONParser().parse(request)
+        room_request = Request.objects.get(id=data['requestid'])
+        room_request.processed = True
+        room_request.approved = True
+        room_request.save(update_fields=['processed','approved'])
+        creator = Admin.objects.get(user=User.objects.get(id=data['adminid']))
+        date = room_request.starttime.strftime("%Y-%m-%d")
+
+        try:
+            dailyCalendar = DailyCalendar.objects.get(date=date)
+        except:
+            dailyCalendar = DailyCalendar.objects.create(date=date)
+            dailyCalendar.save()
+        event = Event.objects.create(eventname=room_request.name, room=room_request.room, creator=creator, date=dailyCalendar, starttime=room_request.starttime, endtime=room_request.endtime)
+        event.save()
+        return JsonResponse({"requestid":room_request.id,"processed":room_request.processed,"approved":room_request.approved,"eventid":event.id}, status=210)
 
 # # TODO: in edit event page, admin selects a date
 # @api_view(['GET'])
@@ -144,11 +192,10 @@ def admin_view_requests(request):
 #     if request.method == 'DELETE': # TODO: delte an event
        
 
-# TODO: admin creates events
-# TODO: add feature of supporting repeated events
-# "room_mgmt/admin/create_events/"
-# time format '%m/%d/%y %H:%M',        # 
-# request format: {"eventname":"a conference","roomnumber":"123","creator":"admin_name","starttime":"10/25/21 14:30","endtime":"10/25/21 16:30","repeat":"none"}
+# admin creates events, TODO: add feature of supporting repeated events
+# "room_mgmt/admin/events/create/"
+# time format: '%Y-%m-%d %H:%M',        # 
+# request format: {"eventname":"a conference","roomnumber":"123","creator":"admin_name","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30","repeat":"none"}
 # response format: {"eventid":"1"}
 @api_view(['POST'])
 def admin_create_events(request):
@@ -178,27 +225,60 @@ def admin_create_events(request):
             return JsonResponse(data,status=400)
 
 
-# # TODO: new user joins a group'
-# @api_view(['POST'])
-# def user_join_group(request):
-#     if request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         # TODO: call serlizer
+# new user joins a group'
+# 'user/join_group/'
+# request format:{"userid":"12",groupcode":"ABCDE"}
+# resposne format: {"groupid": "group.id"}
+@api_view(['POST'])
+def user_join_group(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        group = Group.objects.get(groupcode=data["groupcode"])
+        user = User.objects.get(id=data["userid"])
+        group.user.add(user)
+        room_names = []
+        for room in group.room_set.all():
+            room_names.append(str(room))
+        try:
+         group.user.get(id=data["userid"])
+         return JsonResponse({"groupid":group.id,"roomnames":room_names}, status=201)
+        except:
+            return JsonResponse({"error":"unable to join in group"}, status=400)
 
 # # TODO: user requests calendar for a selected room ; user switches between daily/weekly display of the calendar; user moves to the next/last day/week
+# # mode: "day/week"
+# # date format: "%Y-%m-%d"
+# # request format: {"userid":"userid","roomname":"roomname","mode":"day",firstday":"%Y-%m-%d"}
+# # response format: 
 # @api_view(['GET'])
 # def user_join_group(request):
 #     if request.method == 'GET':
-#         data = JSONParser().parse(request)
+#         data = JSONParser().parse(request) 
 
 
-# # TODO: user sends a request
-# @api_view(['POST'])
-# def user_send_request(request):
-#     if request.method == 'POST':
-#         data = JSONParser().parse(request)
-#         # TODO: call serlizer
-
+# user sends a request
+# "user/request"
+# # time format: '%Y-%m-%d %H:%M', 
+# request format: {"userid":"userid","roomnumber":"number","eventname":"request name","reason":"reason texts","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30","requesttime":"2021-03-25 14:30","repeat":"none"}
+# response format: {"eventname":"request name","requestid":"requestid"}
+# TODO: add features of indetifying/showing conflict
+# TODO: add condition: user not have access to this room
+@api_view(['POST'])
+def user_send_request(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        room = Room.objects.get(roomnumber=data["roomnumber"])
+        requester = User.objects.get(id=data['userid'])
+        starttime = datetime.datetime.strptime(data['starttime'], '%Y-%m-%d %H:%M')
+        endtime = datetime.datetime.strptime(data['endtime'], '%Y-%m-%d %H:%M')
+        requesttime = datetime.datetime.strptime(data['requesttime'], '%Y-%m-%d %H:%M')
+        room_request = Request.objects.create(name=data['eventname'], reason=data['reason'], requester=requester, room=room, starttime=starttime, endtime=endtime, requesttime=requesttime, repeat=data['repeat'])
+        room_request.save()
+        try:
+         Request.objects.get(id=room_request.id)
+         return JsonResponse({"eventname":data['eventname'],"requestid":room_request.id}, status=201)
+        except:
+            return JsonResponse({"error":"unable to create a room request"}, status=400)
 
 # # TODO: Kiosk
 
