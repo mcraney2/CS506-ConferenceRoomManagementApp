@@ -27,13 +27,20 @@ class RoomRequestList extends Component {
         }
     }
     componentDidMount() {
-        //this.getRequests();
-        console.log("Send database request to get requests")
+      console.log("Send database request to get requests")
+      this.getRequests();
+        
     }
     getRequests = () => {
-        axios.get()
+      const request = JSON.stringify(
+        { 
+          adminid:1,
+          groupid: 1
+
+      });
+        axios.get('http://10.0.2.2:8000/room_mgmt/admin/requests/view/')
         .then(response => {
-            this.setState({requests: response.data})
+            this.setState({requests: response.data.requestlist})
         })
         .catch(function(error) {
             console.log(error)
@@ -50,7 +57,7 @@ class RoomRequestList extends Component {
       _renderContent = section => {
         return (
           <View style={styles.content}>
-            <AdminRoomRequest group = {section.group} date = {section.date} time = {section.time} duration = {section.duration} conflicts = {section.conflicts}/>
+            <AdminRoomRequest group = {section.group} date = {section.date} time = {section.time} duration = {section.duration} conflicts = {section.conflicts} id = {section.id}/>
           </View>
         );
       };
@@ -58,7 +65,8 @@ class RoomRequestList extends Component {
         this.setState({ activeSections });
       };
     render() { 
-      console.log(DATA)
+      console.log(DATA);
+      console.log(this.state.requests);
         return (  
             <>
     

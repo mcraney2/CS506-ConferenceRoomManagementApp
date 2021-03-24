@@ -46,7 +46,7 @@ export function ManagementConsole({navigation}) {
             <View style={styles.container2}>
                 <Button 
                     handleClick={() =>
-                        navigation.navigate('UserConsolee')
+                        navigation.navigate('UserConsole')
                     }
                     label="User View"
                 />
