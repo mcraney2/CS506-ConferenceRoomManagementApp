@@ -267,8 +267,16 @@ def user_join_group(request):
 def user_send_request(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        room = Room.objects.get(roomnumber=data["roomnumber"])
-        requester = User.objects.get(id=data['userid'])
+
+        try:
+            room = Room.objects.get(roomnumber=data["roomnumber"])
+        except:
+            return JsonResponse({"error": "request a room not being created"}, status=403)
+        try:
+            requester = User.objects.get(id=data['userid'])
+        except:
+            return JsonResponse({"error": "user not exist"}, status=403)
+            
         starttime = datetime.datetime.strptime(data['starttime'], '%Y-%m-%d %H:%M')
         endtime = datetime.datetime.strptime(data['endtime'], '%Y-%m-%d %H:%M')
         requesttime = datetime.datetime.strptime(data['requesttime'], '%Y-%m-%d %H:%M')
@@ -278,7 +286,7 @@ def user_send_request(request):
          Request.objects.get(id=room_request.id)
          return JsonResponse({"eventname":data['eventname'],"requestid":room_request.id}, status=201)
         except:
-            return JsonResponse({"error":"unable to create a room request"}, status=400)
+            return JsonResponse({"error":"unable to create a room request"}, status=403)
 
 # # TODO: Kiosk
 
