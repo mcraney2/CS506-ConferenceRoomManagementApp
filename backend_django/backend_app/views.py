@@ -275,7 +275,29 @@ def user_join_group(request):
          group.user.get(id=data["userid"])
          return JsonResponse({"groupid":group.id,}, status=201)
         except:
-            return JsonResponse({"error":"unable to join in group"}, status=400)
+            return JsonResponse({"error": "unable to join in group"}, status=403)
+
+# user view rooms
+# "user/rooms/"
+# Request: {"userid":"userid"}
+# response: {"roomslist":list of room_dict}
+@api_view(['GET'])
+def user_view_rooms(request):
+    if request.method == 'GET':
+        data = JSONParser().parse(request)
+        try:
+            user = User.objects.get(id=data['userid'])
+        except:
+            return JsonResponse({"error": "invalid user id"}, status=403)
+        rooms_all = Room.objects.all()
+        rooms_list = []
+        for room in rooms_all:
+            room_dict = {
+                "roomnumber": room.roomnumber,
+                "roomid":room.id,
+            }
+            rooms_list.append(room_dict)
+        return JsonResponse({"roomslist": rooms_list}, status=201)
 
 # # TODO: user requests calendar for a selected room ; user switches between daily/weekly display of the calendar; user moves to the next/last day/week
 # # mode: "day/week"
