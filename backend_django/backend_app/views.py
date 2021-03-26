@@ -109,7 +109,7 @@ def admin_add_room(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         group = Group.objects.get(groupcode=data['groupcode'])
-        room = Room.objects.create(roomnumber=data['roomnumber'], group=group)
+        room = Room.objects.create(roomnumber=data['roomnumber'])
         room.save()
         data["roomid"] = room.id
         return JsonResponse(data, status=201)
@@ -236,12 +236,9 @@ def user_join_group(request):
         group = Group.objects.get(groupcode=data["groupcode"])
         user = User.objects.get(id=data["userid"])
         group.user.add(user)
-        room_names = []
-        for room in group.room_set.all():
-            room_names.append(str(room))
         try:
          group.user.get(id=data["userid"])
-         return JsonResponse({"groupid":group.id,"roomnames":room_names}, status=201)
+         return JsonResponse({"groupid":group.id,}, status=201)
         except:
             return JsonResponse({"error":"unable to join in group"}, status=400)
 
