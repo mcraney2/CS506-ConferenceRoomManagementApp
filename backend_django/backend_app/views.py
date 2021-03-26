@@ -18,13 +18,13 @@ import datetime
 # login authentication
 # "room_mgmt/login/"
 # request format: {"username": "ruisu","password":"zrs12345"}
-# response format: response = {"authenticated": False,"user": False,"new":False,"userid":"id"}
+# response format: response = {"authenticated": False,"type": "user/admin","new":False,"userid":"id"}
 @api_view(['GET'])
 def login(request):
     if request.method == 'GET':
         response = {
             "authenticated": False,
-            "user": False,
+            "type": "admin",
             "new": False,
         }
         data = JSONParser().parse(request)
@@ -42,7 +42,7 @@ def login(request):
                     response["new"]=True
                     return JsonResponse(response,status=201)
             except:
-                response["user"] = True
+                response["type"] = "user"
                 response["userid"] = user.id
                 try: 
                     group = user.group_set.objects.filter(id=1)
@@ -109,7 +109,7 @@ def admin_add_room(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         group = Group.objects.get(groupcode=data['groupcode'])
-        room = Room.objects.create(roomnumber=data['roomnumber'], group=group)
+        room = Room.objects.create(roomnumber=data['roomnumber'])
         room.save()
         data["roomid"] = room.id
         return JsonResponse(data, status=201)
@@ -134,6 +134,7 @@ def admin_view_requests(request):
                 "name": room_request.name,
                 "reason": room_request.reason,
                 "requester": str(room_request.requester),
+                "group": str(room_request.group),
                 "room": str(room_request.room),
                 "starttime": room_request.starttime,
                 "endtime": room_request.endtime,
@@ -158,7 +159,7 @@ def admin_process_request(request):
         room_request.processed = True
         room_request.approved = False
         room_request.save(update_fields=['processed','approved'])
-        return JsonResponse({"requestid":room_request.id,"processed":room_request.processed,"approved":room_request.approved}, status=210)
+        return JsonResponse({"requestid":room_request.id,"processed":room_request.processed,"approved":room_request.approved}, status=201)
     if request.method == 'POST':  # admin aprrove a request -> update request and create corresponding events
         data = JSONParser().parse(request)
         room_request = Request.objects.get(id=data['requestid'])
@@ -175,7 +176,7 @@ def admin_process_request(request):
             dailyCalendar.save()
         event = Event.objects.create(eventname=room_request.name, room=room_request.room, creator=creator, date=dailyCalendar, starttime=room_request.starttime, endtime=room_request.endtime)
         event.save()
-        return JsonResponse({"requestid":room_request.id,"processed":room_request.processed,"approved":room_request.approved,"eventid":event.id}, status=210)
+        return JsonResponse({"requestid":room_request.id,"processed":room_request.processed,"approved":room_request.approved,"eventid":event.id}, status=201)
 
 # # TODO: in edit event page, admin selects a date
 # @api_view(['GET'])
@@ -236,12 +237,9 @@ def user_join_group(request):
         group = Group.objects.get(groupcode=data["groupcode"])
         user = User.objects.get(id=data["userid"])
         group.user.add(user)
-        room_names = []
-        for room in group.room_set.all():
-            room_names.append(str(room))
         try:
          group.user.get(id=data["userid"])
-         return JsonResponse({"groupid":group.id,"roomnames":room_names}, status=201)
+         return JsonResponse({"groupid":group.id,}, status=201)
         except:
             return JsonResponse({"error":"unable to join in group"}, status=400)
 
@@ -259,7 +257,7 @@ def user_join_group(request):
 # user sends a request
 # "user/request"
 # # time format: '%Y-%m-%d %H:%M', 
-# request format: {"userid":"userid","roomnumber":"number","eventname":"request name","reason":"reason texts","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30","requesttime":"2021-03-25 14:30","repeat":"none"}
+# request format: {"userid":"userid","groupid":"groupid","roomnumber":"number","eventname":"request name","reason":"reason texts","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30","requesttime":"2021-03-25 14:30","repeat":"none"}
 # response format: {"eventname":"request name","requestid":"requestid"}
 # TODO: add features of indetifying/showing conflict
 # TODO: add condition: user not have access to this room
@@ -267,18 +265,31 @@ def user_join_group(request):
 def user_send_request(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        room = Room.objects.get(roomnumber=data["roomnumber"])
-        requester = User.objects.get(id=data['userid'])
+
+        try:
+            room = Room.objects.get(roomnumber=data["roomnumber"])
+        except:
+            return JsonResponse({"error": "request a room not being created"}, status=403)
+        try:
+            requester = User.objects.get(id=data['userid'])
+        except:
+            return JsonResponse({"error": "invalid user id"}, status=403)
+        try:
+            group = User.objects.get(id=data['groupid'])
+        except:
+            return JsonResponse({"error": "in valid group id"}, status=403)
+
+            
         starttime = datetime.datetime.strptime(data['starttime'], '%Y-%m-%d %H:%M')
         endtime = datetime.datetime.strptime(data['endtime'], '%Y-%m-%d %H:%M')
         requesttime = datetime.datetime.strptime(data['requesttime'], '%Y-%m-%d %H:%M')
-        room_request = Request.objects.create(name=data['eventname'], reason=data['reason'], requester=requester, room=room, starttime=starttime, endtime=endtime, requesttime=requesttime, repeat=data['repeat'])
+        room_request = Request.objects.create(name=data['eventname'], reason=data['reason'], requester=requester,group=group, room=room, starttime=starttime, endtime=endtime, requesttime=requesttime, repeat=data['repeat'])
         room_request.save()
         try:
          Request.objects.get(id=room_request.id)
          return JsonResponse({"eventname":data['eventname'],"requestid":room_request.id}, status=201)
         except:
-            return JsonResponse({"error":"unable to create a room request"}, status=400)
+            return JsonResponse({"error":"unable to create a room request"}, status=403)
 
 # # TODO: Kiosk
 
