@@ -14,3 +14,26 @@ test('Renders Room Request List snapshot as expected', () => {
     expect(tree).toMatchSnapshot();
 });
 
+test('Converts a Date object to MM/DD/YYYY format', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<AdminRoomRequest/>);
+    const instance = test.instance();
+    let date = new Date(2017, 7, 28, 5, 23, 15, 0);
+    answer = instance.getDate(date);
+    expect(answer).toBe('08/28/2017');
+    let date2 = new Date(2016, 1, 2, 5, 23, 15, 0);
+    answer = instance.getDate(date2);
+    expect(answer).toBe('02/02/2016');
+})
+
+test('Converts a Date object to HH:MM format', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<AdminRoomRequest/>);
+    const instance = test.instance();
+    let date = new Date(2017, 7, 28, 5, 23, 15, 0);
+    answer = instance.getTime(date);
+    expect(answer).toBe('05:23');
+    let date2 = new Date(2016, 1, 2, 16, 0, 15, 0);
+    answer = instance.getTime(date2);
+    expect(answer).toBe('16:00');
+})

@@ -61,7 +61,13 @@ class AdminRoomRequest extends Component {
           
           var year = date.getFullYear();
           var month = date.getMonth() + 1;
+          if (parseInt(month, 10) < 10) {
+            month = '0' + month;
+          }
           var day = date.getDate();
+          if (parseInt(day, 10) < 10) {
+            day = '0' + day;
+          }
          
           var total = month + '/' + day + '/' + year;
           return total;
@@ -70,6 +76,9 @@ class AdminRoomRequest extends Component {
         
         
         var hour = date.getHours();
+        if (parseInt(hour, 10) < 10) {
+          hour = '0' + hour;
+        }
         var minutes = date.getMinutes();
         if (parseInt(minutes, 10) < 10) {
             minutes = '0' + minutes;
@@ -79,11 +88,7 @@ class AdminRoomRequest extends Component {
         return total;
     }
      renderItem = ({ item }) => (
-      // start = new Date(this.props.startTime);
-      // end = new Date(this.props.endTime);
-      // date = this.getDate(start);
-      // startTime = this.getTime(start);
-      // endTime = this.getTime(end);
+
       <View>
               <Text>Group: {item.group}</Text> 
               <Text>Event: {item.name}</Text>
@@ -101,30 +106,7 @@ class AdminRoomRequest extends Component {
             </View>
     );
     render() { 
-        //console.log(this.props);
-        //console.log('start time', this.props.startTime);
-        let start = new Date(this.props.startTime);
-        let end = new Date(this.props.endTime);
-        date = this.getDate(start);
-        startTime = this.getTime(start);
-        endTime = this.getTime(end);
-        return (  
-            // <View>
-            //   <Text>Group: {this.props.group}</Text> 
-            //   <Text>Event: {this.props.event}</Text>
-            //   <Text>Date: {date}</Text>
-            //   <Text testID = 'startTime'>Start Time: {startTime}</Text>
-            //   <Text testID = 'endTime'>End Time: {endTime}</Text>
-            //   <Text>Reason: {this.props.reason}</Text>
-            //   {/* <Text testID = 'conflicts'>Conflicts: {this.props.conflicts}</Text> */}
-            //   <Button handleClick = {() =>this.acceptRequest(this.props.id,this.props.refresh)}
-            //           label = 'Accept'
-            //           />
-            //   <Button handleClick = {() => this.denyRequest(this.props.id, this.props.refresh)}
-            //           label = 'Deny'
-            //           />
-            // </View>
-
+        return ( 
             <SafeAreaView>
               <FlatList
                   data = {this.props.roomList}
