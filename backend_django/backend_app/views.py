@@ -66,7 +66,7 @@ def signup(request):
         try:
             User.objects.get(username=data["username"])  # username already exists'
             # print(User.objects.all())
-            return JsonResponse(response, status=201)
+            return JsonResponse({"error":"user name exists"}, status=403)
         except: # no user exists
             user = User.objects.create_user(username=data['username'], password=data['password'])
             response['userid'] = user.id
@@ -98,7 +98,7 @@ def admin_create_group(request):
             data['groupid'] = group.id
             return JsonResponse(data, status=201)
         except:
-            return JsonResponse({"error":"unable to create group"}, status=400)
+            return JsonResponse({"error":"unable to create group"}, status=403)
 
 
 # admin adds a conference room
@@ -144,7 +144,7 @@ def admin_view_requests(request):
                 "requestid": room_request.id,
             }
             requests_list.append(request_dict)
-        return JsonResponse({"requestlist":requests_list}, status=210)
+        return JsonResponse({"requestlist":requests_list}, status=201)
 
 # TODO: admin approves/rejects a request
 # TODO: check is admin has access to such request 
@@ -178,12 +178,46 @@ def admin_process_request(request):
         event.save()
         return JsonResponse({"requestid":room_request.id,"processed":room_request.processed,"approved":room_request.approved,"eventid":event.id}, status=201)
 
-# # TODO: in edit event page, admin selects a date
-# @api_view(['GET'])
-# def admin_view_events(request):
-#     if request.method == 'GET':
-#         data = JSONParser().parse(request)
-#         # TODO: get a list of events
+# TODO: in edit event page, admin selects a date
+# "room_mgmt/admin/events/view/"
+# time format: '%Y-%m-%d', 
+# request format: {"adminid":"adminid","date":"2021-03-26","roomid":"roomid"}
+# resposne format: {"eventslist": events_return_list}
+@api_view(['GET'])
+def admin_view_events(request):
+    if request.method == 'GET':
+        data = JSONParser().parse(request)
+        date = datetime.date.fromisoformat(data['date'])
+        try:
+            admin = Admin.objects.get(id=data['adminid'])
+        except:
+            return JsonResponse({"error": "admin account not exist"}, status=403)
+        try:
+            room = Room.objects.get(id=data['roomid'])
+        except:
+            return JsonResponse({"error": "invalid room id"}, status=403)
+        try:
+            print(date)
+            print(DailyCalendar.objects.get(date=date))
+            events_by_date = DailyCalendar.objects.get(date=date).event_set.all()
+        except:
+            return JsonResponse({"error": "no events"}, status=403)
+            # return JsonResponse({"eventslist": []}, status=403)
+        events_by_date_room = events_by_date.filter(room=room).order_by('starttime')
+        events_return_list = []
+        for event in events_by_date_room:
+            events_return_dict = {
+                "eventid": event.id,
+                "eventname": event.eventname,
+                "roomnumber": event.room.roomnumber,
+                "creator": str(event.creator),
+                "date": event.date.date,
+                "starttime": event.starttime,
+                "endtime": event.endtime,
+            }
+            events_return_list.append(events_return_dict)
+        return JsonResponse({"eventslist": events_return_list}, status=201)
+
 
 # # TODO: Event: admin click the “edit/delete” bottom
 # @api_view(['PUT','DELETE'])
@@ -241,7 +275,29 @@ def user_join_group(request):
          group.user.get(id=data["userid"])
          return JsonResponse({"groupid":group.id,}, status=201)
         except:
-            return JsonResponse({"error":"unable to join in group"}, status=400)
+            return JsonResponse({"error": "unable to join in group"}, status=403)
+
+# user view rooms
+# "user/rooms/"
+# Request: {"userid":"userid"}
+# response: {"roomslist":list of room_dict}
+@api_view(['GET'])
+def user_view_rooms(request):
+    if request.method == 'GET':
+        # data = JSONParser().parse(request)
+        # try:
+        #     user = User.objects.get(id=data['userid'])
+        # except:
+        #     return JsonResponse({"error": "invalid user id"}, status=403)
+        rooms_all = Room.objects.all()
+        rooms_list = []
+        for room in rooms_all:
+            room_dict = {
+                "roomnumber": room.roomnumber,
+                "roomid":room.id,
+            }
+            rooms_list.append(room_dict)
+        return JsonResponse({"roomslist": rooms_list}, status=201)
 
 # # TODO: user requests calendar for a selected room ; user switches between daily/weekly display of the calendar; user moves to the next/last day/week
 # # mode: "day/week"

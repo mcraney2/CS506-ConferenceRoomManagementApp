@@ -11,7 +11,7 @@ class Admin(models.Model):
 class Group(models.Model):
     groupname = models.CharField(max_length=100,blank=False,unique=True)
     groupcode = models.CharField(max_length=100,unique = True,blank=False) # automatically generated
-    manager = models.ForeignKey(Admin, on_delete=models.CASCADE,blank=False)
+    # manager = models.ForeignKey(Admin, on_delete=models.CASCADE,blank=False)
     user = models.ManyToManyField(User, blank=True, null=True)
     
     def __str__(self):
