@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from "../components/Button.js";
 import TextBox from "../components/TextBox.js";
+import AddRooms from "../components/AddRooms.js";
 import { Value } from 'react-native-reanimated';
 
 export function ManagementConsole({navigation}) {
@@ -12,21 +13,7 @@ export function ManagementConsole({navigation}) {
             <Text style={styles.textSty}>Management Console</Text>
             <Text style={styles.textSty2}>Group Code: </Text>
             <Text style={styles.textSty3}>Add Conference Room: </Text>
-            <TextBox
-                height={30}
-                width={220}
-                borderColor={"grey"}
-                borderWidth={1}
-                margin={10}
-                placeholder=' Conference Room Name/Number'
-            />
-            <Button 
-                handleClick={() =>
-                    navigation.navigate('ManagementConsole')
-                }
-                label="Add"
-                
-            />
+            <AddRooms/>
             <View style={styles.container2}>      
                 <Button 
                     handleClick={() =>
