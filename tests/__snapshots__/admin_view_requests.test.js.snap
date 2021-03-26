@@ -1,0 +1,1004 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders Admin Room Request snapshot as expected 1`] = `
+<View>
+  <Text>
+    Group: 
+  </Text>
+  <Text>
+    Date: 
+  </Text>
+  <Text>
+    Time: 
+  </Text>
+  <Text>
+    Duration: 
+  </Text>
+  <Text>
+    Conflicts: 
+  </Text>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "red",
+          "borderRadius": 25,
+          "justifyContent": "center",
+          "paddingHorizontal": 25,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 18,
+          }
+        }
+      >
+        Accept
+      </Text>
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "red",
+          "borderRadius": 25,
+          "justifyContent": "center",
+          "paddingHorizontal": 25,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 18,
+          }
+        }
+      >
+        Deny
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Renders Room Request List snapshot as expected 1`] = `
+<View>
+  <View
+    style={Object {}}
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <View>
+        <Text
+          style={
+            Object {
+              "fontSize": 22,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Room: 
+          1010
+        </Text>
+      </View>
+    </View>
+    <View
+      pointerEvents="none"
+      style={
+        Object {
+          "height": 0,
+          "overflow": "hidden",
+        }
+      }
+    >
+      <View
+        forwardedRef={[Function]}
+        onLayout={[Function]}
+        style={Object {}}
+      >
+        <View>
+          <View>
+            <Text>
+              Group: 
+              Wee
+            </Text>
+            <Text>
+              Date: 
+              1/31/10
+            </Text>
+            <Text>
+              Time: 
+              2 pm
+            </Text>
+            <Text>
+              Duration: 
+              2 hours
+            </Text>
+            <Text>
+              Conflicts: 
+            </Text>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Accept
+                </Text>
+              </View>
+            </View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Deny
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={Object {}}
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <View>
+        <Text
+          style={
+            Object {
+              "fontSize": 22,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Room: 
+          1020
+        </Text>
+      </View>
+    </View>
+    <View
+      pointerEvents="none"
+      style={
+        Object {
+          "height": 0,
+          "overflow": "hidden",
+        }
+      }
+    >
+      <View
+        forwardedRef={[Function]}
+        onLayout={[Function]}
+        style={Object {}}
+      >
+        <View>
+          <View>
+            <Text>
+              Group: 
+              Pee
+            </Text>
+            <Text>
+              Date: 
+              2/31/10
+            </Text>
+            <Text>
+              Time: 
+              3 pm
+            </Text>
+            <Text>
+              Duration: 
+              1 hours
+            </Text>
+            <Text>
+              Conflicts: 
+            </Text>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Accept
+                </Text>
+              </View>
+            </View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Deny
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Renders snapshot as expected 1`] = `
+<View>
+  <View
+    style={Object {}}
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <View>
+        <Text
+          style={
+            Object {
+              "fontSize": 22,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Room: 
+          1010
+        </Text>
+      </View>
+    </View>
+    <View
+      pointerEvents="none"
+      style={
+        Object {
+          "height": 0,
+          "overflow": "hidden",
+        }
+      }
+    >
+      <View
+        forwardedRef={[Function]}
+        onLayout={[Function]}
+        style={Object {}}
+      >
+        <View>
+          <View>
+            <Text>
+              Group: 
+              Wee
+            </Text>
+            <Text>
+              Date: 
+              1/31/10
+            </Text>
+            <Text>
+              Time: 
+              2 pm
+            </Text>
+            <Text>
+              Duration: 
+              2 hours
+            </Text>
+            <Text>
+              Conflicts: 
+            </Text>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Accept
+                </Text>
+              </View>
+            </View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Deny
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={Object {}}
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <View>
+        <Text
+          style={
+            Object {
+              "fontSize": 22,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Room: 
+          1020
+        </Text>
+      </View>
+    </View>
+    <View
+      pointerEvents="none"
+      style={
+        Object {
+          "height": 0,
+          "overflow": "hidden",
+        }
+      }
+    >
+      <View
+        forwardedRef={[Function]}
+        onLayout={[Function]}
+        style={Object {}}
+      >
+        <View>
+          <View>
+            <Text>
+              Group: 
+              Pee
+            </Text>
+            <Text>
+              Date: 
+              2/31/10
+            </Text>
+            <Text>
+              Time: 
+              3 pm
+            </Text>
+            <Text>
+              Duration: 
+              1 hours
+            </Text>
+            <Text>
+              Conflicts: 
+            </Text>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Accept
+                </Text>
+              </View>
+            </View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Deny
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`Renders snapshot as expected 2`] = `
+<View>
+  <View
+    style={Object {}}
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <View>
+        <Text
+          style={
+            Object {
+              "fontSize": 22,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Room: 
+          1010
+        </Text>
+      </View>
+    </View>
+    <View
+      pointerEvents="none"
+      style={
+        Object {
+          "height": 0,
+          "overflow": "hidden",
+        }
+      }
+    >
+      <View
+        forwardedRef={[Function]}
+        onLayout={[Function]}
+        style={Object {}}
+      >
+        <View>
+          <View>
+            <Text>
+              Group: 
+              Wee
+            </Text>
+            <Text>
+              Date: 
+              1/31/10
+            </Text>
+            <Text>
+              Time: 
+              2 pm
+            </Text>
+            <Text>
+              Duration: 
+              2 hours
+            </Text>
+            <Text>
+              Conflicts: 
+            </Text>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Accept
+                </Text>
+              </View>
+            </View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Deny
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={Object {}}
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <View>
+        <Text
+          style={
+            Object {
+              "fontSize": 22,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Room: 
+          1020
+        </Text>
+      </View>
+    </View>
+    <View
+      pointerEvents="none"
+      style={
+        Object {
+          "height": 0,
+          "overflow": "hidden",
+        }
+      }
+    >
+      <View
+        forwardedRef={[Function]}
+        onLayout={[Function]}
+        style={Object {}}
+      >
+        <View>
+          <View>
+            <Text>
+              Group: 
+              Pee
+            </Text>
+            <Text>
+              Date: 
+              2/31/10
+            </Text>
+            <Text>
+              Time: 
+              3 pm
+            </Text>
+            <Text>
+              Duration: 
+              1 hours
+            </Text>
+            <Text>
+              Conflicts: 
+            </Text>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Accept
+                </Text>
+              </View>
+            </View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "red",
+                    "borderRadius": 25,
+                    "justifyContent": "center",
+                    "paddingHorizontal": 25,
+                    "paddingVertical": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "white",
+                      "fontSize": 18,
+                    }
+                  }
+                >
+                  Deny
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

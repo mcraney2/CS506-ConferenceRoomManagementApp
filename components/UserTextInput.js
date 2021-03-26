@@ -25,6 +25,7 @@ class UserTextInput extends Component {
             editable={true}
             multiline={true}
             value={newValue}
+            testID = 'text'
             onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)}
           />);
     }

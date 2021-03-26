@@ -25,6 +25,7 @@ class RoomSelectDropdown extends Component {
                         selectedValue = {this.props.room}
                         onValueChange = {this.props.setRoom}
                         style={{ height: 25, width: 150 }}
+                        testID = 'Room'
                         >
                             {this.roomsList()}
                         </Picker>
