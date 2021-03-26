@@ -144,7 +144,7 @@ def admin_view_requests(request):
                 "requestid": room_request.id,
             }
             requests_list.append(request_dict)
-        return JsonResponse({"requestlist":requests_list}, status=212010)
+        return JsonResponse({"requestlist":requests_list}, status=201)
 
 # TODO: admin approves/rejects a request
 # TODO: check is admin has access to such request 
