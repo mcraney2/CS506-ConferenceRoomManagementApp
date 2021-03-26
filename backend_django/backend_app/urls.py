@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/requests/view/', views.admin_view_requests, name="admin_view_requests"),
     path('admin/requests/process/', views.admin_process_request, name="admin_process_request"),
     path('admin/events/create/', views.admin_create_events, name="admin_create_events"),
+    path('admin/events/view/', views.admin_view_events, name="admin_view_events"),
     path('user/join_group/', views.user_join_group, name="user_join_group"),
     path('user/request/', views.user_send_request, name="user_request"),
 ]
