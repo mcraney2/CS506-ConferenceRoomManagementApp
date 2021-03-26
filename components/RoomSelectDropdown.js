@@ -1,19 +1,21 @@
+  
 //import DropDownPicker from 'react-native-dropdown-picker';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import axios from 'axios';
 
 class RoomSelectDropdown extends Component {
     constructor(props) {
         super(props);
-        this.state = {  
-            rooms : ['1080','1100', '1220', '1070' ]
-        }
+
     }
     roomsList = () => {
-        return( this.state.rooms.map( (x,i) => { 
+        return( this.props.roomList.map( (x,i) => { 
             return( <Picker.Item label={x} key={i} value={x}  />)} ));
   }
+
+
     
     render() { 
         
@@ -25,6 +27,7 @@ class RoomSelectDropdown extends Component {
                         selectedValue = {this.props.room}
                         onValueChange = {this.props.setRoom}
                         style={{ height: 25, width: 150 }}
+                        testID = 'Room'
                         >
                             {this.roomsList()}
                         </Picker>
@@ -48,4 +51,3 @@ const styles = StyleSheet.create({
     }
 })
 export default RoomSelectDropdown;
-

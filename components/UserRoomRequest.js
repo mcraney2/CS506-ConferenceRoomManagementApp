@@ -18,6 +18,7 @@ class UserRoomRequest extends Component {
             room: '0',
             reason: '',
             event: '',
+            roomList: [],
         }
     }
     setDate (newDate) {
@@ -38,13 +39,27 @@ class UserRoomRequest extends Component {
     setEvent (newEvent) {
         this.setState({event: newEvent});
     }
-    sendRequest(room,startTime, endTime, currentTime, reason) {
-        console.log(room,startTime, endTime, currentTime, reason.value);
+    sendRequest(room,startTime, endTime, currentTime, reason, event) {
+        console.log(room,startTime, endTime, currentTime, reason.value, event.value);
+        /// The following code is just to simulate adding a room to the database so I test my stuff
+        // const addRoom = JSON.stringify(
+        //     {roomnumber: room}
+        // );
+        // axios.post('http://10.0.2.2:8000/room_mgmt/admin/add_room/', addRoom)
+        // .then(function (response) {
+        //   console.log(response);
+        // })
+        // .catch(function (error) {
+        //   console.log('oof')
+        //   console.log(error);
+        // });    
+        //////////////////END ZACH TESTING ROOM AREA////////////////////////////
         const request = JSON.stringify(
           { 
             userid: 1,
+            groupid:1,
             roomnumber:room,
-            eventname:"Zach's Test",
+            eventname:event.value,
             reason: reason.value,
             starttime:startTime,
             endtime:endTime,
@@ -60,16 +75,52 @@ class UserRoomRequest extends Component {
           console.log(error);
         });
       }
+
     parseTime(date) {
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         var day = date.getDate();
         var hour = date.getHours();
         var minutes = date.getMinutes();
+        if (parseInt(minutes, 10) < 10) {
+            minutes = '0' + minutes;
+        }
         var total = year + '-' + month + '-' + day + ' ' + hour + ':' + minutes;
 
         return total;
     }
+    componentDidMount() {
+        //console.log("Send database request to get requests")
+        this.getRooms();
+          
+      }
+      getRooms(){
+        console.log('Get requests');
+        const request = JSON.stringify(
+          { 
+            'userid': 'userid'
+    
+        });
+        axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+        // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
+        //     method: 'GET',
+        //     body: request
+        // })
+          .then(response => {
+              console.log('Hello?');
+              //console.log(response.data);
+              let rooms = response.data.roomslist;
+              let temp = [];
+              for (let i = 0; i < rooms.length; i++) {
+                  temp.push(rooms[i].roomnumber);
+              }
+              this.setState({roomList: temp})
+          })
+          .catch(function(error) {
+              console.log(error)
+          })
+      }
+
     render() { 
         
         //const endTime = Object.assign({}, this.state.date);
@@ -90,7 +141,7 @@ class UserRoomRequest extends Component {
                     label="Send Request"
                 /> */}
                 
-                <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)}/>
+                <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 <DateTimeSelector date = {this.state.date} setDate = {this.setDate.bind(this)}/>
                 <DurationDropDown minutes = {this.state.minutes} setMinutes = {this.setMinutes.bind(this)} hours = {this.state.hours} setHours = {this.setHours.bind(this)}/>
                 
@@ -98,7 +149,8 @@ class UserRoomRequest extends Component {
                 <UserTextInput placeHolder = 'Enter reason for room request'value = {this.state.reason} setValue = {this.setReason.bind(this)}/>
                 <UserTextInput placeHolder = 'Enter event name'value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
                 <Button 
-                    handleClick= {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.reason)}
+                    handleClick= {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.reason, this.state.event)}
+                    //handleClick= {() => this.getRooms()}
                     label="Send Request"
                 />
                 {/* <Text>{this.state.reason}</Text> */}

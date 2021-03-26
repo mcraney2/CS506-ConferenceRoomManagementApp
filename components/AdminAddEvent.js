@@ -81,6 +81,39 @@ class AdminAddEvent extends Component {
         return total;
     }
 
+    componentDidMount() {
+        //console.log("Send database request to get requests")
+        this.getRooms();
+          
+    }
+
+    getRooms(){
+    console.log('Get requests');
+    const request = JSON.stringify(
+        { 
+        'userid': 'userid'
+
+    });
+    axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+    // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
+    //     method: 'GET',
+    //     body: request
+    // })
+        .then(response => {
+            //console.log('Hello?');
+            console.log(response);
+            let rooms = response.data.roomslist;
+            let temp = [];
+            for (let i = 0; i < rooms.length; i++) {
+                temp.push(rooms[i].roomnumber);
+            }
+            this.setState({roomList: temp})
+        })
+        .catch(function(error) {
+            console.log(error)
+        })
+    }
+
     render() { 
         
         //const endTime = Object.assign({}, this.state.date);
