@@ -83,15 +83,16 @@ def signup(request):
 
 # new admin creates a group
 # "room_mgmt/admin/create_group/"
-# request format: {"groupname","group1","manager":"ruisu_admin"}  
-# response format: {"groupname","group1","manager":"ruisu_admin","groupcode":"LLQIGOBKRYRCPAT","groupid":"groupid"} 
+# request format: {"groupname","group1",}  
+# response format: {"groupname","group1","groupcode":"LLQIGOBKRYRCPAT","groupid":"groupid"} 
 @api_view(['POST'])
 def admin_create_group(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        manager = Admin.objects.get(user=User.objects.get(username=data['manager']))
-        data['groupcode'] = ''.join(random.choice(string.ascii_uppercase) for i in range(15))
-        group = Group.objects.create(groupname=data['groupname'],groupcode=data['groupcode'],manager=manager)
+        # TODO: group code to be randomly generated
+        # data['groupcode'] = ''.join(random.choice(string.ascii_uppercase) for i in range(15))
+        data['groupcode'] = data['groupname']
+        group = Group.objects.create(groupname=data['groupname'],groupcode=data['groupcode'])
         group.save()
         try:
             data['groupid'] = group.id
@@ -102,13 +103,12 @@ def admin_create_group(request):
 
 # admin adds a conference room
 # "room_mgmt/admin/add_room/"
-# request format: {"groupcode":"LLQIGOBKRYRCPAT","roomnumber":"1123"}
-# response format: {"groupcode":"LLQIGOBKRYRCPAT","roomnumber":"1123","roomid"="id"}
+# request format: {"roomnumber":"1123"}
+# response format: {"roomnumber":"1123","roomid"="id"}
 @api_view(['POST'])
 def admin_add_room(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        group = Group.objects.get(groupcode=data['groupcode'])
         room = Room.objects.create(roomnumber=data['roomnumber'])
         room.save()
         data["roomid"] = room.id
