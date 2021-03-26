@@ -20,7 +20,7 @@ class UserTextInput extends Component {
         return (  
         <TextInput
             placeholder= {this.props.placeHolder}
-            onChangeText={(value) => this.props.setValue({value})}
+            onChangeText={(value) => this.props.setValue(value.reactEvent.text)}
             style={[newStyle]}
             editable={true}
             multiline={true}
