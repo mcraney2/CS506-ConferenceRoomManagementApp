@@ -5,6 +5,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import Button from "../components/Button.js";
 import TextBox from "../components/TextBox.js"
 
+// Replace part of the return interior with the LogInComponent when we figure out how to navigate between screens from
+// components classes
 export function LogInScreen({navigation}) {
     return (
         <View style={styles.container}>
