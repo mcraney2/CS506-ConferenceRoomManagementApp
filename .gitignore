@@ -9,6 +9,7 @@ npm-debug.*
 *.orig.*
 web-build/
 sftp.json
+backend_django/db.sqlite3
 
 # macOS
 .DS_Store
