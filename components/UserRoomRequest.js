@@ -18,6 +18,7 @@ class UserRoomRequest extends Component {
             room: '0',
             reason: '',
             event: '',
+            roomList: [],
         }
     }
     setDate (newDate) {
@@ -74,6 +75,7 @@ class UserRoomRequest extends Component {
           console.log(error);
         });
       }
+
     parseTime(date) {
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
@@ -87,6 +89,38 @@ class UserRoomRequest extends Component {
 
         return total;
     }
+    componentDidMount() {
+        //console.log("Send database request to get requests")
+        this.getRooms();
+          
+      }
+      getRooms(){
+        console.log('Get requests');
+        const request = JSON.stringify(
+          { 
+            'userid': 'userid'
+    
+        });
+        axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+        // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
+        //     method: 'GET',
+        //     body: request
+        // })
+          .then(response => {
+              console.log('Hello?');
+              //console.log(response.data);
+              let rooms = response.data.roomslist;
+              let temp = [];
+              for (let i = 0; i < rooms.length; i++) {
+                  temp.push(rooms[i].roomnumber);
+              }
+              this.setState({roomList: temp})
+          })
+          .catch(function(error) {
+              console.log(error)
+          })
+      }
+
     render() { 
         
         //const endTime = Object.assign({}, this.state.date);
@@ -107,7 +141,7 @@ class UserRoomRequest extends Component {
                     label="Send Request"
                 /> */}
                 
-                <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)}/>
+                <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 <DateTimeSelector date = {this.state.date} setDate = {this.setDate.bind(this)}/>
                 <DurationDropDown minutes = {this.state.minutes} setMinutes = {this.setMinutes.bind(this)} hours = {this.state.hours} setHours = {this.setHours.bind(this)}/>
                 
@@ -116,6 +150,7 @@ class UserRoomRequest extends Component {
                 <UserTextInput placeHolder = 'Enter event name'value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
                 <Button 
                     handleClick= {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.reason, this.state.event)}
+                    //handleClick= {() => this.getRooms()}
                     label="Send Request"
                 />
                 {/* <Text>{this.state.reason}</Text> */}
