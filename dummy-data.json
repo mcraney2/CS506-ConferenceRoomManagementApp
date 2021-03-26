@@ -1,0 +1,29 @@
+
+ {
+        "requests" : [
+            {
+            "room" : "1010",
+            "date" : "1/31/10",
+            "group": "Wee",
+            "time": "2 pm",
+            "duration": "2 hours",
+            "conflicts" : null,
+            "id" : 1
+            },
+
+            {
+            "room" : "1020",
+            "date" : "2/31/10",
+            "group": "Pee",
+            "time": "3 pm",
+            "duration": "1 hours",
+            "conflicts" : null,
+            "id" : 2
+            }
+
+
+        
+           
+          
+    ]
+}
