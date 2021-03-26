@@ -16,7 +16,8 @@ class UserConsoleComponent extends Component {
         this.state = { 
             room: '0',
             events: [],
-            date: new Date()
+            date: new Date(),
+            roomList: []
         }
     }
 
@@ -41,7 +42,30 @@ class UserConsoleComponent extends Component {
           console.log(error);
         });
     }
+    componentDidMount() {
+        //console.log("Send database request to get requests")
+        this.getRooms();
+          
+      }
+      getRooms(){
+        axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+        // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
+        //     method: 'GET',
+        //     body: request
+        // })
+          .then(response => {
 
+              let rooms = response.data.roomslist;
+              let temp = [];
+              for (let i = 0; i < rooms.length; i++) {
+                  temp.push(rooms[i].roomnumber);
+              }
+              this.setState({roomList: temp})
+          })
+          .catch(function(error) {
+              console.log(error)
+          })
+      }
     parseTime(date) {
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
@@ -57,7 +81,7 @@ class UserConsoleComponent extends Component {
             <View>
                 <Text style={styles.textSty3}>Room to View:</Text>
                 <View style={styles.selectContainer}>
-                    <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)}/>
+                    <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 </View>
                 <View style={styles.calendarContainer}>
                     <Calendar events={this.state.events} height={400} />

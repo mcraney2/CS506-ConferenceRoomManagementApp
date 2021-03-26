@@ -95,20 +95,13 @@ class UserRoomRequest extends Component {
           
       }
       getRooms(){
-        console.log('Get requests');
-        const request = JSON.stringify(
-          { 
-            'userid': 'userid'
-    
-        });
         axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
         // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
         //     method: 'GET',
         //     body: request
         // })
           .then(response => {
-              console.log('Hello?');
-              //console.log(response.data);
+
               let rooms = response.data.roomslist;
               let temp = [];
               for (let i = 0; i < rooms.length; i++) {
