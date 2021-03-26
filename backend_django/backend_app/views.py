@@ -18,13 +18,13 @@ import datetime
 # login authentication
 # "room_mgmt/login/"
 # request format: {"username": "ruisu","password":"zrs12345"}
-# response format: response = {"authenticated": False,"user": False,"new":False,"userid":"id"}
+# response format: response = {"authenticated": False,"type": "user/admin","new":False,"userid":"id"}
 @api_view(['GET'])
 def login(request):
     if request.method == 'GET':
         response = {
             "authenticated": False,
-            "user": False,
+            "type": "admin",
             "new": False,
         }
         data = JSONParser().parse(request)
@@ -42,7 +42,7 @@ def login(request):
                     response["new"]=True
                     return JsonResponse(response,status=201)
             except:
-                response["user"] = True
+                response["type"] = "user"
                 response["userid"] = user.id
                 try: 
                     group = user.group_set.objects.filter(id=1)
