@@ -284,7 +284,7 @@ def user_join_group(request):
 @api_view(['GET'])
 def user_view_rooms(request):
     if request.method == 'GET':
-        data = JSONParser().parse(request)
+        # data = JSONParser().parse(request)
         # try:
         #     user = User.objects.get(id=data['userid'])
         # except:
