@@ -31,7 +31,7 @@ class DateTimeSelector extends Component {
         this.showMode('time');
       };
     render() { 
-        //console.log(this.props.date);
+        
         return (  
             <View>
                 <View>
