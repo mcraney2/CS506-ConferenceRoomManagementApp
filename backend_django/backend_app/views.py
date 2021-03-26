@@ -275,7 +275,7 @@ def user_send_request(request):
         except:
             return JsonResponse({"error": "invalid user id"}, status=403)
         try:
-            group = User.objects.get(id=data['groupid'])
+            group = Group.objects.get(id=data['groupid'])
         except:
             return JsonResponse({"error": "in valid group id"}, status=403)
 
