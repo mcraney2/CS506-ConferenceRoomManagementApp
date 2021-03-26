@@ -285,10 +285,10 @@ def user_join_group(request):
 def user_view_rooms(request):
     if request.method == 'GET':
         data = JSONParser().parse(request)
-        try:
-            user = User.objects.get(id=data['userid'])
-        except:
-            return JsonResponse({"error": "invalid user id"}, status=403)
+        # try:
+        #     user = User.objects.get(id=data['userid'])
+        # except:
+        #     return JsonResponse({"error": "invalid user id"}, status=403)
         rooms_all = Room.objects.all()
         rooms_list = []
         for room in rooms_all:
