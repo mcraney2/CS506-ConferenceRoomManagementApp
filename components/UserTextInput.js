@@ -20,11 +20,12 @@ class UserTextInput extends Component {
         return (  
         <TextInput
             placeholder= {this.props.placeHolder}
-            onChangeText={(value) => this.props.setValue({value})}
+            onChangeText={(value) => this.props.setValue(value)}
             style={[newStyle]}
             editable={true}
             multiline={true}
             value={newValue}
+            testID = 'text'
             onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)}
           />);
     }
