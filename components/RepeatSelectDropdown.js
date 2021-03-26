@@ -1,21 +1,19 @@
-  
 //import DropDownPicker from 'react-native-dropdown-picker';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import axios from 'axios';
 
-class RoomSelectDropdown extends Component {
+class RepeatSelectDropdown extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {  
+            options : ['None','Weekly', 'Monthly']
+        }
     }
-    roomsList = () => {
-        return( this.props.roomList.map( (x,i) => { 
+    optionsList = () => {
+        return( this.state.options.map( (x,i) => { 
             return( <Picker.Item label={x} key={i} value={x}  />)} ));
-  }
-
-
+    }
     
     render() { 
         
@@ -24,20 +22,20 @@ class RoomSelectDropdown extends Component {
                 <View style = {styles.container}>
                 
                     <Picker
-                        selectedValue = {this.props.room}
-                        onValueChange = {this.props.setRoom}
+                        selectedValue = {this.props.repeat}
+                        onValueChange = {this.props.setRepeat}
                         style={{ height: 25, width: 150 }}
-                        testID = 'Room'
                         >
-                            {this.roomsList()}
+                            {this.optionsList()}
                         </Picker>
               
                     </View>
 
-</>
+            </>
         );
     }
 }
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -50,4 +48,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 })
-export default RoomSelectDropdown;
+
+export default RepeatSelectDropdown;

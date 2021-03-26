@@ -10,6 +10,7 @@ npm-debug.*
 web-build/
 sftp.json
 db.sqlite3
+
 *.sqlite3
 # macOS
 .DS_Store
