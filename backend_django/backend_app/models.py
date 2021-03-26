@@ -11,7 +11,7 @@ class Admin(models.Model):
 class Group(models.Model):
     groupname = models.CharField(max_length=100,blank=False,unique=True)
     groupcode = models.CharField(max_length=100,unique = True,blank=False) # automatically generated
-    manager = models.ForeignKey(Admin, on_delete=models.CASCADE,blank=False)
+    # manager = models.ForeignKey(Admin, on_delete=models.CASCADE,blank=False)
     user = models.ManyToManyField(User, blank=True, null=True)
     
     def __str__(self):
@@ -20,7 +20,7 @@ class Group(models.Model):
 
 class Room(models.Model):
     roomnumber = models.CharField(max_length=100,blank=False,unique=True)
-    group = models.ForeignKey(Group, blank=False, null=True, on_delete=models.SET_NULL)
+    # group = models.ForeignKey(Group, blank=False, null=True, on_delete=models.SET_NULL)
     
     def __str__(self):
         return self.roomnumber
@@ -46,7 +46,8 @@ class Event(models.Model):
 class Request(models.Model):
     name = models.CharField(max_length=250, blank=True,null=True)
     reason = models.TextField(blank=True,null=True)
-    requester = models.ForeignKey(User,blank=False,null=True,on_delete=models.SET_NULL)
+    requester = models.ForeignKey(User, blank=False, null=True, on_delete=models.SET_NULL)
+    group = models.ForeignKey(Group,blank=False,null=True,on_delete=models.SET_NULL)
     room = models.ForeignKey(Room,blank=False,null=True,on_delete=models.SET_NULL)
     # TODO: specify format, and default setting 
     starttime = models.DateTimeField (blank=False)  
