@@ -45,16 +45,16 @@ export function UserConsole({navigation}) {
                         
                     />
           </View>
+          <View style={styles.calendarContainer}>
+            <Calendar events={events} height={400} />
+          </View>
+            
           <Button 
                 handleClick={() =>
                     navigation.navigate('RequestRoomUser')
                 }
                 label="Request Conference Room"
             />
-          <View style={styles.calendarContainer}>
-            <Calendar events={events} height={400} />
-          </View>
-            
         </View>
     );
   }
