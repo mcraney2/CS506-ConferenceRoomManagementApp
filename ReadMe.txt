@@ -11,6 +11,7 @@ Download app here to view app: https://expo.io/
 6) Click "Run with Android Emulator" from the page that expo launches
 
 Postman is useful to help send requests to test the backend
+1) To run tests - npm tests
 
 Dependencies to Download:
 
