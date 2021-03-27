@@ -1,10 +1,13 @@
 
+{
+
  {
         "requests" : [
             {
             "room" : "1010",
             "date" : "1/31/10",
             "group": "Wee",
+            "time": "2 pm",
             "startTime": "2:00",
             "endTime": "4:00",
             "duration": "2 hours",
@@ -16,6 +19,7 @@
             "room" : "1020",
             "date" : "2/31/10",
             "group": "Pee",
+            "time": "3 pm",
             "startTime": "3:00",
             "endTime": "4:00",
             "duration": "1 hours",
