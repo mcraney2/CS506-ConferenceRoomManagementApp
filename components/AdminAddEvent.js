@@ -20,7 +20,8 @@ class AdminAddEvent extends Component {
             minutes: '0',
             room: '0',
             event: '',
-            repeat:'none'
+            repeat:'none',
+            roomList: []
         }
     }
 
@@ -131,7 +132,7 @@ class AdminAddEvent extends Component {
             <>
             <View>
                 <Text style={styles.textSty}>Add Event To:</Text>
-                <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)}/>
+                <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 <Text style={styles.textSty3}>Event Name:</Text>
                 <UserTextInput placeHolder = '' value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
                 <Text style={styles.textSty3}>Date and Time of Event:</Text>

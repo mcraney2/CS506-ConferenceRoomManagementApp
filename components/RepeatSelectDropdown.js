@@ -24,6 +24,7 @@ class RepeatSelectDropdown extends Component {
                     <Picker
                         selectedValue = {this.props.repeat}
                         onValueChange = {this.props.setRepeat}
+                        testID = 'repeat'
                         style={{ height: 25, width: 150 }}
                         >
                             {this.optionsList()}
