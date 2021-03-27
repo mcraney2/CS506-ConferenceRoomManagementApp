@@ -34,13 +34,15 @@ class UserRoomRequest extends Component {
         this.setState({room : newRoom});
     }
     setReason (newReason) {
+        console.log(newReason);
         this.setState({reason: newReason});
     }
     setEvent (newEvent) {
+        console.log(newEvent);
         this.setState({event: newEvent});
     }
     sendRequest(room,startTime, endTime, currentTime, reason, event) {
-        console.log(room,startTime, endTime, currentTime, reason.value, event.value);
+        console.log(room,startTime, endTime, currentTime, reason, event);
         /// The following code is just to simulate adding a room to the database so I test my stuff
         // const addRoom = JSON.stringify(
         //     {roomnumber: room}
@@ -59,8 +61,8 @@ class UserRoomRequest extends Component {
             userid: 1,
             groupid:1,
             roomnumber:room,
-            eventname:event.value,
-            reason: reason.value,
+            eventname:event,
+            reason: reason,
             starttime:startTime,
             endtime:endTime,
             requesttime:currentTime,
