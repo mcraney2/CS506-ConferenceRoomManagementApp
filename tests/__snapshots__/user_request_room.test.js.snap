@@ -1,0 +1,359 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders snapshot as expected 1`] = `
+<View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "height": 25,
+          "width": 150,
+        }
+      }
+    >
+      <RNCPicker
+        items={
+          Array [
+            Object {
+              "label": "1080",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "1080",
+            },
+            Object {
+              "label": "1100",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "1100",
+            },
+            Object {
+              "label": "1220",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "1220",
+            },
+            Object {
+              "label": "1070",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "1070",
+            },
+          ]
+        }
+        onChange={[Function]}
+        selectedIndex={0}
+        style={
+          Array [
+            Object {
+              "height": 216,
+            },
+            undefined,
+          ]
+        }
+        testID="Room"
+      />
+    </View>
+  </View>
+  <View>
+    <View>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "red",
+              "borderRadius": 25,
+              "justifyContent": "center",
+              "paddingHorizontal": 25,
+              "paddingVertical": 12,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "white",
+                "fontSize": 18,
+              }
+            }
+          >
+            Select Date
+          </Text>
+        </View>
+      </View>
+      <Text>
+        Current Date: 
+        3
+        /
+        26
+        /
+        2021
+      </Text>
+    </View>
+    <View>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "red",
+              "borderRadius": 25,
+              "justifyContent": "center",
+              "paddingHorizontal": 25,
+              "paddingVertical": 12,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "white",
+                "fontSize": 18,
+              }
+            }
+          >
+            Select Time
+          </Text>
+        </View>
+      </View>
+      <Text>
+        Time: 
+        3
+        :
+        17
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "height": 25,
+          "width": 150,
+        }
+      }
+    >
+      <RNCPicker
+        items={
+          Array [
+            Object {
+              "label": "0 hours",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "0",
+            },
+            Object {
+              "label": "1 hour",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "1",
+            },
+            Object {
+              "label": "2 hours",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "2",
+            },
+            Object {
+              "label": "3 hours",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "3",
+            },
+          ]
+        }
+        onChange={[Function]}
+        selectedIndex={0}
+        style={
+          Array [
+            Object {
+              "height": 216,
+            },
+            undefined,
+          ]
+        }
+        testID="Hours"
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "height": 25,
+          "width": 150,
+        }
+      }
+    >
+      <RNCPicker
+        items={
+          Array [
+            Object {
+              "label": "0 minutes",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "0",
+            },
+            Object {
+              "label": "15 minutes",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "15",
+            },
+            Object {
+              "label": "30 minutes",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "30",
+            },
+            Object {
+              "label": "45 minutes",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "45",
+            },
+          ]
+        }
+        onChange={[Function]}
+        selectedIndex={0}
+        style={
+          Array [
+            Object {
+              "height": 216,
+            },
+            undefined,
+          ]
+        }
+        testID="Minutes"
+      />
+    </View>
+  </View>
+  <TextInput
+    allowFontScaling={true}
+    collapsable={false}
+    editable={true}
+    multiline={true}
+    onChangeText={[Function]}
+    onContentSizeChange={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    placeholder="Enter reason for room request"
+    rejectResponderTermination={true}
+    style={
+      Array [
+        30,
+      ]
+    }
+    testID="text"
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <TextInput
+    allowFontScaling={true}
+    collapsable={false}
+    editable={true}
+    multiline={true}
+    onChangeText={[Function]}
+    onContentSizeChange={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    placeholder="Enter event name"
+    rejectResponderTermination={true}
+    style={
+      Array [
+        30,
+      ]
+    }
+    testID="text"
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "red",
+          "borderRadius": 25,
+          "justifyContent": "center",
+          "paddingHorizontal": 25,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 18,
+          }
+        }
+      >
+        Send Request
+      </Text>
+    </View>
+  </View>
+  <Text>
+    Test
+  </Text>
+</View>
+`;

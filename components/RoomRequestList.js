@@ -6,18 +6,7 @@ import jsonData from '../dummy-data'
 import Accordion from 'react-native-collapsible/Accordion'
 import axios from 'axios'
 
-const DATA = jsonData.requests.map(function(item) {
-    return {
-      room: item.room,
-      group: item.group,
-      date: item.date,
-      time: item.time,
-      duration: item.duration,
-      id: item.id,
-      conflicts :item.conflicts
-    }; 
-  
-  })
+
 class RoomRequestList extends Component {
     constructor(props) {
         super(props);
@@ -27,13 +16,21 @@ class RoomRequestList extends Component {
         }
     }
     componentDidMount() {
-        //this.getRequests();
-        console.log("Send database request to get requests")
+      //console.log("Send database request to get requests")
+      this.getRequests();
+        
     }
-    getRequests = () => {
-        axios.get()
+    getRequests(){
+      //console.log('Get requests');
+      const request = JSON.stringify(
+        { 
+          adminid:1,
+          groupid: 1
+
+      });
+        axios.get('http://10.0.2.2:8000/room_mgmt/admin/requests/view/')
         .then(response => {
-            this.setState({requests: response.data})
+            this.setState({requests: response.data.requestlist})
         })
         .catch(function(error) {
             console.log(error)
@@ -50,30 +47,67 @@ class RoomRequestList extends Component {
       _renderContent = section => {
         return (
           <View style={styles.content}>
-            <AdminRoomRequest group = {section.group} date = {section.date} time = {section.time} duration = {section.duration} conflicts = {section.conflicts}/>
+            {/* <AdminRoomRequest room = {section.room} startTime = {section.starttime} endTime = {section.endtime} group = {section.group} event = {section.name} reason = {section.reason} id = {section.requestid} refresh = {this.getRequests.bind(this)}/> */}
+            <AdminRoomRequest roomList = {section.requests} refresh = {this.getRequests.bind(this)}/>
           </View>
         );
       };
       _updateSections = activeSections => {
         this.setState({ activeSections });
       };
+
+
+
+      //  format Array[
+      //   Object {
+      //     room: X
+      //     requests: []
+      //   }
+      // ]
+      createArray(requests) {
+        let arr = [];
+        for (let i = 0; i < requests.length; i++) {
+          let room = requests[i].room;
+          let pushed = false;
+          for (let j = 0; j < arr.length; j++) {
+            if (arr[j].room === room) {
+              arr[j].requests.push(requests[i]);
+              pushed = true;
+            }
+          }
+          if (!pushed) {
+            arr.push({room : room, requests:[requests[i]]})
+          }
+        }
+        
+        return arr;
+      }
     render() { 
-      console.log(DATA)
+      //console.log(DATA);
+      //console.log(this.state.requests);
+      let array = this.createArray(this.state.requests);
         return (  
-            <>
-    
+            
+                    // <Accordion
+                    //     sections={this.state.requests}
+                    //     activeSections={this.state.activeSections}
+                    //     //renderSectionTitle={this._renderSectionTitle}
+                    //     renderHeader={this._renderHeader}
+                    //     renderContent={this._renderContent}
+                    //     onChange={this._updateSections}
+                    //  />
                     <Accordion
-                        sections={DATA}
-                        activeSections={this.state.activeSections}
-                        //renderSectionTitle={this._renderSectionTitle}
-                        renderHeader={this._renderHeader}
-                        renderContent={this._renderContent}
-                        onChange={this._updateSections}
-                     />
+                    sections={array}
+                    activeSections={this.state.activeSections}
+                    //renderSectionTitle={this._renderSectionTitle}
+                    renderHeader={this._renderHeader}
+                    renderContent={this._renderContent}
+                    onChange={this._updateSections}
+                 />
                 
 
 
-            </>
+            
         );
     }
 }

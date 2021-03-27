@@ -30,18 +30,49 @@ class DateTimeSelector extends Component {
     showTimepicker = () => {
         this.showMode('time');
       };
+      getDate(date) {
+          
+          
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        if (parseInt(month, 10) < 10) {
+          month = '0' + month;
+        }
+        var day = date.getDate();
+        if (parseInt(day, 10) < 10) {
+          day = '0' + day;
+        }
+       
+        var total = month + '/' + day + '/' + year;
+        return total;
+    }
+  getTime(date) {
+      
+      
+      var hour = date.getHours();
+      if (parseInt(hour, 10) < 10) {
+        hour = '0' + hour;
+      }
+      var minutes = date.getMinutes();
+      if (parseInt(minutes, 10) < 10) {
+          minutes = '0' + minutes;
+      }
+      var total = hour + ':' + minutes;
+
+      return total;
+  }
     render() { 
-        //console.log(this.props.date);
+        
         return (  
             <View>
                 <View>
                     
                     <Button handleClick={this.showDatepicker} label="Select Date" />
-                    <Text>Current Date: {this.props.date.getMonth()+1}/{this.props.date.getDate()}/{this.props.date.getFullYear()}</Text>
+                    <Text>Current Date: {this.getDate(this.props.date)}</Text>
                 </View>
                 <View>
                     <Button handleClick={this.showTimepicker} label="Select Time" />
-                    <Text>Time: {this.props.date.getHours()}:{this.props.date.getMinutes()}</Text>
+                    <Text>Time: {this.getTime(this.props.date)}</Text>
                 </View>
                 {this.state.show && (
                     <DateTimePicker
