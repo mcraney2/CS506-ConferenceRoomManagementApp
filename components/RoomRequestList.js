@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, TouchableOpacityBase, View} from 'react-native'
 import AdminRoomRequest from './AdminRoomRequest'
-import jsonData from '../dummy-data'
+
 import Accordion from 'react-native-collapsible/Accordion'
 import axios from 'axios'
 
