@@ -11,6 +11,8 @@ const TextBox = props => {
                     margin: props.margin,
                     borderWidth: props.borderWidth}}
             placeholder={props.placeholder}
+            onChangeText={(value) => props.setValue(value)}
+            value={props.value}
         />
         /*
             <TouchableOpacity onPress={props.handleClick}>
