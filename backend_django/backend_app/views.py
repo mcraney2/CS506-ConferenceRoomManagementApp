@@ -19,9 +19,9 @@ import datetime
 # "room_mgmt/login/"
 # request format: {"username": "ruisu","password":"zrs12345"}
 # response format: response = {"authenticated": False,"type": "user/admin","new":False,"userid":"id"}
-@api_view(['GET'])
+@api_view(['C'])
 def login(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         response = {
             "authenticated": False,
             "type": "admin",
@@ -119,9 +119,9 @@ def admin_add_room(request):
 # "room_mgmt/admin/requests/view/"
 # request format: {"adminid":"adminid","groupid":"groupid"}
 # response format: "requestlist":requests_list}
-@api_view(['GET'])
+@api_view(['POST'])
 def admin_view_requests(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         requests = Request.objects.filter(processed=False)
         print(requests)
         requests = requests.order_by('-requesttime')
@@ -183,9 +183,9 @@ def admin_process_request(request):
 # time format: '%Y-%m-%d', 
 # request format: {"adminid":"adminid","date":"2021-03-26","roomid":"roomid"}
 # resposne format: {"eventslist": events_return_list}
-@api_view(['GET'])
+@api_view(['POST'])
 def admin_view_events(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         data = JSONParser().parse(request)
         date = datetime.date.fromisoformat(data['date'])
         try:
@@ -231,6 +231,7 @@ def admin_view_events(request):
 # "room_mgmt/admin/events/create/"
 # time format: '%Y-%m-%d %H:%M',        # 
 # request format: {"eventname":"a conference","roomnumber":"123","creator":"admin_name","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30","repeat":"none"}
+# TODO: add creator back
 # response format: {"eventid":"1"}
 @api_view(['POST'])
 def admin_create_events(request):
@@ -239,7 +240,7 @@ def admin_create_events(request):
         data = JSONParser().parse(request)
         print(data)
         room = Room.objects.get(roomnumber=data["roomnumber"])
-        creator = Admin.objects.get(user=User.objects.get(username=data['creator']))
+        # creator = Admin.objects.get(user=User.objects.get(username=data['creator']))
         starttime = datetime.datetime.strptime(data['starttime'], '%Y-%m-%d %H:%M')
         endtime = datetime.datetime.strptime(data['endtime'], '%Y-%m-%d %H:%M')
         date = starttime.strftime("%Y-%m-%d")
@@ -250,7 +251,8 @@ def admin_create_events(request):
             dailyCalendar = DailyCalendar.objects.create(date=date)
             dailyCalendar.save()
         
-        event = Event.objects.create(eventname=data["eventname"], room=room, creator=creator, date=dailyCalendar, starttime=starttime, endtime=endtime)
+        event = Event.objects.create(eventname=data["eventname"], room=room, creator=None, date=dailyCalendar, starttime=starttime, endtime=endtime)
+        # event = Event.objects.create(eventname=data["eventname"], room=room, creator=creator, date=dailyCalendar, starttime=starttime, endtime=endtime)
         event.save()
 
         try:
@@ -281,9 +283,9 @@ def user_join_group(request):
 # "user/rooms/"
 # Request: {"userid":"userid"}
 # response: {"roomslist":list of room_dict}
-@api_view(['GET'])
+@api_view(['POST'])
 def user_view_rooms(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         # data = JSONParser().parse(request)
         # try:
         #     user = User.objects.get(id=data['userid'])
