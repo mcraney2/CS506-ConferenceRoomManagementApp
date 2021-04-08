@@ -231,6 +231,7 @@ def admin_view_events(request):
 # "room_mgmt/admin/events/create/"
 # time format: '%Y-%m-%d %H:%M',        # 
 # request format: {"eventname":"a conference","roomnumber":"123","creator":"admin_name","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30","repeat":"none"}
+# TODO: add creator back
 # response format: {"eventid":"1"}
 @api_view(['POST'])
 def admin_create_events(request):
@@ -239,7 +240,7 @@ def admin_create_events(request):
         data = JSONParser().parse(request)
         print(data)
         room = Room.objects.get(roomnumber=data["roomnumber"])
-        creator = Admin.objects.get(user=User.objects.get(username=data['creator']))
+        # creator = Admin.objects.get(user=User.objects.get(username=data['creator']))
         starttime = datetime.datetime.strptime(data['starttime'], '%Y-%m-%d %H:%M')
         endtime = datetime.datetime.strptime(data['endtime'], '%Y-%m-%d %H:%M')
         date = starttime.strftime("%Y-%m-%d")
@@ -250,7 +251,8 @@ def admin_create_events(request):
             dailyCalendar = DailyCalendar.objects.create(date=date)
             dailyCalendar.save()
         
-        event = Event.objects.create(eventname=data["eventname"], room=room, creator=creator, date=dailyCalendar, starttime=starttime, endtime=endtime)
+        event = Event.objects.create(eventname=data["eventname"], room=room, creator=None, date=dailyCalendar, starttime=starttime, endtime=endtime)
+        # event = Event.objects.create(eventname=data["eventname"], room=room, creator=creator, date=dailyCalendar, starttime=starttime, endtime=endtime)
         event.save()
 
         try:
