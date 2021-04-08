@@ -19,6 +19,9 @@ class LogInComponent extends Component {
             response: ''
         }
     }
+    static navigationOptions = {
+        title : 'Home',
+    };
 
     setUsername (newUsername) {
         this.setState({username : newUsername});
@@ -71,7 +74,7 @@ class LogInComponent extends Component {
                 <Button 
                         // Make this the line the replacement when everything has been handled
                         // handleClick = {() => this.sendRequest(this.state.username, this.state.password)}
-                        handleClick = {() => this.props.navigation.navigate('Mangement Console')}
+                        handleClick = {() => this.props.navigation.navigate('Management Console')}
                         label = "Log-In"
                     />
             </View>
