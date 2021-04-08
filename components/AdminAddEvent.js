@@ -20,7 +20,8 @@ class AdminAddEvent extends Component {
             minutes: '0',
             room: '0',
             event: '',
-            repeat:'none'
+            repeat:'none',
+            roomList: []
         }
     }
 
@@ -48,11 +49,12 @@ class AdminAddEvent extends Component {
         this.setState({repeat: newRepeat});
     }
 
-    sendRequest(room,startTime, endTime, currentTime, event, repeat) {
+    sendRequest(room, creator, startTime, endTime, currentTime, event, repeat) {
         console.log(room,startTime, endTime, currentTime, event.value, repeat.value);
         const request = JSON.stringify(
           { 
             userid: 1,
+            creator: creator,
             roomnumber:room,
             eventname:event.value,
             starttime:startTime,
@@ -85,33 +87,33 @@ class AdminAddEvent extends Component {
         //console.log("Send database request to get requests")
         this.getRooms();
           
-    }
+      }
+      getRooms(){
+        axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+        // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
+        //     method: 'GET',
+        //     body: request
+        // })
+          .then(response => {
 
-    getRooms(){
-    console.log('Get requests');
-    const request = JSON.stringify(
-        { 
-        'userid': 'userid'
+              let rooms = response.data.roomslist;
+              let temp = [];
+              for (let i = 0; i < rooms.length; i++) {
+                  temp.push(rooms[i].roomnumber);
+              }
+              this.setState({roomList: temp})
+          })
+          .catch(function(error) {
+              console.log(error)
+          })
+      }
+        parseTime(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var total = year + '-' + month + '-' + day;
 
-    });
-    axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
-    // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
-    //     method: 'GET',
-    //     body: request
-    // })
-        .then(response => {
-            //console.log('Hello?');
-            console.log(response);
-            let rooms = response.data.roomslist;
-            let temp = [];
-            for (let i = 0; i < rooms.length; i++) {
-                temp.push(rooms[i].roomnumber);
-            }
-            this.setState({roomList: temp})
-        })
-        .catch(function(error) {
-            console.log(error)
-        })
+        return total;
     }
 
     render() { 
@@ -125,13 +127,14 @@ class AdminAddEvent extends Component {
         let startDate = this.parseTime(this.state.date);
         let endDate = this.parseTime(endTime);
         let currentTime = this.parseTime(new Date());
+        let creator = "test";
         //console.log(startDate, endDate, currentTime);
 
         return ( 
             <>
             <View>
                 <Text style={styles.textSty}>Add Event To:</Text>
-                <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)}/>
+                <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 <Text style={styles.textSty3}>Event Name:</Text>
                 <UserTextInput placeHolder = '' value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
                 <Text style={styles.textSty3}>Date and Time of Event:</Text>
@@ -141,7 +144,7 @@ class AdminAddEvent extends Component {
                 <Text style={styles.textSty3}>Repeat:</Text>
                 <RepeatSelectDropdown repeat = {this.state.repeat} setRepeat = {this.setRepeat.bind(this)}/>
                 <Button 
-                        handleClick = {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.event, this.state.repeat)}
+                        handleClick = {() => this.sendRequest(this.state.room, creator, startDate, endDate, currentTime, this.state.event, this.state.repeat)}
                         label = "Add Event"
                     />
             </View>

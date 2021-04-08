@@ -7,7 +7,7 @@ import Button from '../components/Button'
 import axios from 'axios'
 import { TextInput } from 'react-native-gesture-handler';
 import RepeatSelectDropdown from './RepeatSelectDropdown';
-import { Calendar } from 'react-native-big-calendar'
+import { Calendar } from 'react-native-big-calendar';
 
 class LogInComponent extends Component {
     

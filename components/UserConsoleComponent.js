@@ -31,17 +31,31 @@ class UserConsoleComponent extends Component {
         console.log(room, date);
         const request = JSON.stringify(
           { 
-            // FILL IN
-
+            adminid: 1,
+            date: date,
+            roomid: room
         });
-        axios.post('http://10.0.2.2:8000/', request)   // NEED TO WAIT FOR VINCENT/RUISU TO CREATE QUERY
+        axios.get('http://10.0.2.2:8000/room_mgmt/admin/events/view', request)  
         .then(function (response) {
+            console.log(response);
           this.state.events = response;
         })
         .catch(function (error) {
           console.log(error);
         });
     }
+
+    parseTime(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minutes = date.getMinutes();
+        var total = year + '-' + month + '-' + day + ' ' + hour + ':' + minutes;
+
+        return total;
+    }
+
     componentDidMount() {
         //console.log("Send database request to get requests")
         this.getRooms();
@@ -66,7 +80,7 @@ class UserConsoleComponent extends Component {
               console.log(error)
           })
       }
-    parseTime(date) {
+        parseTime(date) {
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         var day = date.getDate();
@@ -91,6 +105,7 @@ class UserConsoleComponent extends Component {
         );
     }
 }
+
 const styles = StyleSheet.create({
     input: {
         paddingRight: 10,
