@@ -199,17 +199,15 @@ def admin_process_request(request):
 # time format: '%Y-%m-%d',
 # request format: {"adminid":"adminid","date":"2021-03-26","roomid":"roomid"}
 # resposne format: {"eventslist": events_return_list}
-
-
 @api_view(['POST'])
 def admin_view_events(request):
     if request.method == 'POST':
         data = JSONParser().parse(request)
         date = datetime.date.fromisoformat(data['date'])
-        try:
-            admin = Admin.objects.get(id=data['adminid'])
-        except:
-            return JsonResponse({"error": "admin account not exist"}, status=403)
+        # try:
+        #     admin = Admin.objects.get(id=data['adminid'])
+        # except:
+        #     return JsonResponse({"error": "admin account not exist"}, status=403)
         try:
             room = Room.objects.get(id=data['roomid'])
         except:
