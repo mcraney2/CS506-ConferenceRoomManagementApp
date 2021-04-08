@@ -19,11 +19,13 @@ class AdminAddEvent extends Component {
             hours: '0',
             minutes: '0',
             room: '0',
-            event: '',
+            value: '',
             repeat:'none',
             roomList: []
         }
     }
+
+    
 
     setDate (newDate) {
         this.setState({date:newDate});
@@ -41,25 +43,25 @@ class AdminAddEvent extends Component {
         this.setState({room : newRoom});
     }
 
-    setEvent (newEvent) {
-        this.setState({event: newEvent});
+    setValue (newValue) {
+        this.setState({value: newValue});
     }
 
     setRepeat(newRepeat) {
         this.setState({repeat: newRepeat});
     }
 
-    sendRequest(room, creator, startTime, endTime, currentTime, event, repeat) {
-        console.log(room,startTime, endTime, currentTime, event.value, repeat.value);
+    sendRequest(room, startTime, endTime, value, repeat) {
+        console.log(room,startTime, endTime, value, repeat.value);
         const request = JSON.stringify(
           { 
-            userid: 1,
-            creator: creator,
+            //userid: 1,
+            //creator: creator,
+            //eventname:event.value,
+            eventname: value,
             roomnumber:room,
-            eventname:event.value,
             starttime:startTime,
             endtime:endTime,
-            requesttime:currentTime,
             repeat:repeat.value,
 
         });
@@ -89,7 +91,7 @@ class AdminAddEvent extends Component {
           
       }
       getRooms(){
-        axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+        axios.post('http://10.0.2.2:8000/room_mgmt/user/rooms/')
         // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
         //     method: 'GET',
         //     body: request
@@ -111,7 +113,9 @@ class AdminAddEvent extends Component {
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         var day = date.getDate();
-        var total = year + '-' + month + '-' + day;
+        var hour = date.getHours();
+        var minutes = date.getMinutes();
+        var total = year + '-' + month + '-' + day + ' ' + hour + ':' + minutes;
 
         return total;
     }
@@ -136,7 +140,7 @@ class AdminAddEvent extends Component {
                 <Text style={styles.textSty}>Add Event To:</Text>
                 <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 <Text style={styles.textSty3}>Event Name:</Text>
-                <UserTextInput placeHolder = '' value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
+                <UserTextInput placeHolder = 'Enter Event Name Here' value = {this.state.value} setValue = {this.setValue.bind(this)}/>
                 <Text style={styles.textSty3}>Date and Time of Event:</Text>
                 <DateTimeSelector date = {this.state.date} setDate = {this.setDate.bind(this)}/>
                 <Text style={styles.textSty3}>Event Duration:</Text>
@@ -144,7 +148,7 @@ class AdminAddEvent extends Component {
                 <Text style={styles.textSty3}>Repeat:</Text>
                 <RepeatSelectDropdown repeat = {this.state.repeat} setRepeat = {this.setRepeat.bind(this)}/>
                 <Button 
-                        handleClick = {() => this.sendRequest(this.state.room, creator, startDate, endDate, currentTime, this.state.event, this.state.repeat)}
+                        handleClick = {() => this.sendRequest(this.state.room, startDate, endDate, this.state.value, this.state.repeat)}
                         label = "Add Event"
                     />
             </View>

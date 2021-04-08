@@ -35,7 +35,7 @@ class UserConsoleComponent extends Component {
             date: date,
             roomid: room
         });
-        axios.get('http://10.0.2.2:8000/room_mgmt/admin/events/view', request)  
+        axios.post('http://10.0.2.2:8000/room_mgmt/admin/events/view', request)  
         .then(function (response) {
             console.log(response);
           this.state.events = response;
@@ -62,7 +62,7 @@ class UserConsoleComponent extends Component {
           
       }
       getRooms(){
-        axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+        axios.post('http://10.0.2.2:8000/room_mgmt/user/rooms/')
         // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
         //     method: 'GET',
         //     body: request
@@ -98,7 +98,10 @@ class UserConsoleComponent extends Component {
                     <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 </View>
                 <View style={styles.calendarContainer}>
-                    <Calendar events={this.state.events} height={400} />
+                    <Calendar 
+                        events={this.state.events} 
+                        height={400} 
+                    />
                 </View>
             </View>
             </>
