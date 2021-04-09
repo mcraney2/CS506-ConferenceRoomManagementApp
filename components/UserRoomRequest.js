@@ -8,6 +8,7 @@ import UserTextInput from './UserTextInput'
 import Button from './Button'
 import axios from 'axios'
 import { TextInput } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 class UserRoomRequest extends Component {
     constructor(props) {
         super(props);
@@ -41,8 +42,8 @@ class UserRoomRequest extends Component {
         console.log(newEvent);
         this.setState({event: newEvent});
     }
-    sendRequest(room,startTime, endTime, currentTime, reason, event) {
-        console.log(room,startTime, endTime, currentTime, reason, event);
+    sendRequest(room,startTime, endTime, currentTime, reason, event, groupid, userid) {
+        console.log(room,startTime, endTime, currentTime, reason, event, groupid, userid);
         /// The following code is just to simulate adding a room to the database so I test my stuff
         // const addRoom = JSON.stringify(
         //     {roomnumber: room}
@@ -58,8 +59,8 @@ class UserRoomRequest extends Component {
         //////////////////END ZACH TESTING ROOM AREA////////////////////////////
         const request = JSON.stringify(
           { 
-            userid: 1,
-            groupid:1,
+            userid: userid,
+            groupid:groupid,
             roomnumber:room,
             eventname:event,
             reason: reason,
@@ -97,7 +98,7 @@ class UserRoomRequest extends Component {
           
       }
       getRooms(){
-        axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+        axios.post('http://10.0.2.2:8000/room_mgmt/user/rooms/')
         // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
         //     method: 'GET',
         //     body: request
@@ -128,6 +129,7 @@ class UserRoomRequest extends Component {
         let endDate = this.parseTime(endTime);
         let currentTime = this.parseTime(new Date());
         //console.log(startDate, endDate, currentTime);
+        
         return ( 
             <>
             <View>
@@ -135,7 +137,7 @@ class UserRoomRequest extends Component {
                     handleClick= {this.sendRequest(this.room, startDate, endDate, currentTime)}
                     label="Send Request"
                 /> */}
-                
+                <Text >Group: {this.props.userGroupCode.groupCode.userGroupCode}</Text>
                 <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 <DateTimeSelector date = {this.state.date} setDate = {this.setDate.bind(this)}/>
                 <DurationDropDown minutes = {this.state.minutes} setMinutes = {this.setMinutes.bind(this)} hours = {this.state.hours} setHours = {this.setHours.bind(this)}/>
@@ -144,7 +146,7 @@ class UserRoomRequest extends Component {
                 <UserTextInput placeHolder = 'Enter reason for room request'value = {this.state.reason} setValue = {this.setReason.bind(this)}/>
                 <UserTextInput placeHolder = 'Enter event name'value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
                 <Button 
-                    handleClick= {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.reason, this.state.event)}
+                    handleClick= {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.reason, this.state.event, this.props.userGroupCode.groupCode.userGroupID, this.props.userGroupCode.userID.userid)}
                     //handleClick= {() => this.getRooms()}
                     label="Send Request"
                 />
@@ -156,7 +158,7 @@ class UserRoomRequest extends Component {
                     multiline={true}
                     underlineColorAndroid='transparent'
             /> */}
-                <Text>Test</Text>
+                {/* <Text>Test</Text> */}
 
                 </View>
 
@@ -172,4 +174,15 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top'
     },
 })
-export default UserRoomRequest;
+const mapDispatchToProps =  {
+  
+    
+
+  }
+  
+  const mapStateToProps = (state) => {
+    return {
+        userGroupCode: state
+    }
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(UserRoomRequest);

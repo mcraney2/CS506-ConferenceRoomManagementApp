@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders AddRoom snapshot as expected 1`] = `
+<View>
+  <TextInput
+    allowFontScaling={true}
+    collapsable={false}
+    editable={true}
+    multiline={true}
+    onChangeText={[Function]}
+    onContentSizeChange={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    placeholder="Conference Room Name/Number"
+    rejectResponderTermination={true}
+    style={
+      Array [
+        30,
+      ]
+    }
+    testID="text"
+    underlineColorAndroid="transparent"
+  />
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "red",
+          "borderRadius": 25,
+          "justifyContent": "center",
+          "paddingHorizontal": 25,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 18,
+          }
+        }
+      >
+        Add
+      </Text>
+    </View>
+  </View>
+</View>
+`;

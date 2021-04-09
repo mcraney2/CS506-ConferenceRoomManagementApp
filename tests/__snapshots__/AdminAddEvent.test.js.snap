@@ -1,0 +1,428 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders AdminAddEvent snapshot as expected 1`] = `
+<View>
+  <Text
+    style={
+      Object {
+        "fontSize": 30,
+        "fontWeight": "bold",
+        "marginTop": 20,
+      }
+    }
+  >
+    Add Event To:
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "height": 25,
+          "width": 150,
+        }
+      }
+    >
+      <RNCPicker
+        items={Array []}
+        onChange={[Function]}
+        selectedIndex={0}
+        style={
+          Array [
+            Object {
+              "height": 216,
+            },
+            undefined,
+          ]
+        }
+        testID="Room"
+      />
+    </View>
+  </View>
+  <Text
+    style={
+      Object {
+        "color": "#474747",
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "marginBottom": 10,
+        "marginLeft": 10,
+        "marginRight": 10,
+        "marginTop": 10,
+      }
+    }
+  >
+    Event Name:
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    collapsable={false}
+    editable={true}
+    multiline={true}
+    onChangeText={[Function]}
+    onContentSizeChange={[Function]}
+    onGestureHandlerEvent={[Function]}
+    onGestureHandlerStateChange={[Function]}
+    placeholder=""
+    rejectResponderTermination={true}
+    style={
+      Array [
+        30,
+      ]
+    }
+    testID="text"
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <Text
+    style={
+      Object {
+        "color": "#474747",
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "marginBottom": 10,
+        "marginLeft": 10,
+        "marginRight": 10,
+        "marginTop": 10,
+      }
+    }
+  >
+    Date and Time of Event:
+  </Text>
+  <View>
+    <View>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "red",
+              "borderRadius": 25,
+              "justifyContent": "center",
+              "paddingHorizontal": 25,
+              "paddingVertical": 12,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "white",
+                "fontSize": 18,
+              }
+            }
+          >
+            Select Date
+          </Text>
+        </View>
+      </View>
+      <Text>
+        Current Date: 
+        04/06/2021
+      </Text>
+    </View>
+    <View>
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "red",
+              "borderRadius": 25,
+              "justifyContent": "center",
+              "paddingHorizontal": 25,
+              "paddingVertical": 12,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "white",
+                "fontSize": 18,
+              }
+            }
+          >
+            Select Time
+          </Text>
+        </View>
+      </View>
+      <Text>
+        Time: 
+        01:31
+      </Text>
+    </View>
+  </View>
+  <Text
+    style={
+      Object {
+        "color": "#474747",
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "marginBottom": 10,
+        "marginLeft": 10,
+        "marginRight": 10,
+        "marginTop": 10,
+      }
+    }
+  >
+    Event Duration:
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "height": 25,
+          "width": 150,
+        }
+      }
+    >
+      <RNCPicker
+        items={
+          Array [
+            Object {
+              "label": "0 hours",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "0",
+            },
+            Object {
+              "label": "1 hour",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "1",
+            },
+            Object {
+              "label": "2 hours",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "2",
+            },
+            Object {
+              "label": "3 hours",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "3",
+            },
+          ]
+        }
+        onChange={[Function]}
+        selectedIndex={0}
+        style={
+          Array [
+            Object {
+              "height": 216,
+            },
+            undefined,
+          ]
+        }
+        testID="Hours"
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "height": 25,
+          "width": 150,
+        }
+      }
+    >
+      <RNCPicker
+        items={
+          Array [
+            Object {
+              "label": "0 minutes",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "0",
+            },
+            Object {
+              "label": "15 minutes",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "15",
+            },
+            Object {
+              "label": "30 minutes",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "30",
+            },
+            Object {
+              "label": "45 minutes",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "45",
+            },
+          ]
+        }
+        onChange={[Function]}
+        selectedIndex={0}
+        style={
+          Array [
+            Object {
+              "height": 216,
+            },
+            undefined,
+          ]
+        }
+        testID="Minutes"
+      />
+    </View>
+  </View>
+  <Text
+    style={
+      Object {
+        "color": "#474747",
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "marginBottom": 10,
+        "marginLeft": 10,
+        "marginRight": 10,
+        "marginTop": 10,
+      }
+    }
+  >
+    Repeat:
+  </Text>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "height": 25,
+          "width": 150,
+        }
+      }
+    >
+      <RNCPicker
+        items={
+          Array [
+            Object {
+              "label": "None",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "None",
+            },
+            Object {
+              "label": "Weekly",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "Weekly",
+            },
+            Object {
+              "label": "Monthly",
+              "testID": undefined,
+              "textColor": undefined,
+              "value": "Monthly",
+            },
+          ]
+        }
+        onChange={[Function]}
+        selectedIndex={0}
+        style={
+          Array [
+            Object {
+              "height": 216,
+            },
+            undefined,
+          ]
+        }
+        testID="repeat"
+      />
+    </View>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "red",
+          "borderRadius": 25,
+          "justifyContent": "center",
+          "paddingHorizontal": 25,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 18,
+          }
+        }
+      >
+        Add Event
+      </Text>
+    </View>
+  </View>
+</View>
+`;

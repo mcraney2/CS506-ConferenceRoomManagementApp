@@ -3,15 +3,17 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from "../components/Button.js";
-import DropDownPicker from 'react-native-dropdown-picker';
-import { useState } from 'react';
+
 import UserConsoleComponent from "../components/UserConsoleComponent.js"
 
-export function UserConsole({navigation}) {
+import { useSelector, useDispatch } from 'react-redux';
+function UserConsole({navigation}, props) {
+    
+    
     return (
       <>
         <View style={styles.container}>
-          <Text style={styles.textSty}>View Calendars</Text>
+          
           <UserConsoleComponent />
         </View>
         <View style={styles.button}>
@@ -50,3 +52,5 @@ export function UserConsole({navigation}) {
     margin: 10,
   },
   });
+
+  export default UserConsole;

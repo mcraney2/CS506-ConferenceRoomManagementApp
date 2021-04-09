@@ -8,7 +8,9 @@ import axios from 'axios'
 import { TextInput } from 'react-native-gesture-handler';
 import RepeatSelectDropdown from './RepeatSelectDropdown';
 import { Calendar } from 'react-native-big-calendar'
-
+import {resetUserGroup} from '../actions/GroupCodeActionCreators'
+import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 class UserConsoleComponent extends Component {
     
     constructor(props) {
@@ -31,24 +33,38 @@ class UserConsoleComponent extends Component {
         console.log(room, date);
         const request = JSON.stringify(
           { 
-            // FILL IN
-
+            adminid: 1,
+            date: date,
+            roomid: room
         });
-        axios.post('http://10.0.2.2:8000/', request)   // NEED TO WAIT FOR VINCENT/RUISU TO CREATE QUERY
+        axios.post('http://10.0.2.2:8000/room_mgmt/admin/events/view', request)  
         .then(function (response) {
+            console.log(response);
           this.state.events = response;
         })
         .catch(function (error) {
           console.log(error);
         });
     }
+
+    parseTime(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minutes = date.getMinutes();
+        var total = year + '-' + month + '-' + day + ' ' + hour + ':' + minutes;
+
+        return total;
+    }
+
     componentDidMount() {
         //console.log("Send database request to get requests")
         this.getRooms();
           
       }
       getRooms(){
-        axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+        axios.post('http://10.0.2.2:8000/room_mgmt/user/rooms/')
         // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
         //     method: 'GET',
         //     body: request
@@ -66,7 +82,7 @@ class UserConsoleComponent extends Component {
               console.log(error)
           })
       }
-    parseTime(date) {
+        parseTime(date) {
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         var day = date.getDate();
@@ -76,21 +92,30 @@ class UserConsoleComponent extends Component {
     }
 
     render() { 
+        //const counter = useSelector(state => state)
+        console.log("In UserConsoleComponent", this.props);
         return ( 
             <>
             <View>
+            {/* <Text style={styles.textSty}>User Group Code: {this.props.userGroupCode}</Text> */}
+            {/* <Text style={styles.textSty3}>{counter.userGroupCode}</Text>; */}
+                <Text style={styles.textSty1}>Group: {this.props.userGroupCode.groupCode.userGroupCode}</Text>
                 <Text style={styles.textSty3}>Room to View:</Text>
                 <View style={styles.selectContainer}>
                     <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 </View>
                 <View style={styles.calendarContainer}>
-                    <Calendar events={this.state.events} height={400} />
+                    <Calendar 
+                        events={this.state.events} 
+                        height={400} 
+                    />
                 </View>
             </View>
             </>
         );
     }
 }
+
 const styles = StyleSheet.create({
     input: {
         paddingRight: 10,
@@ -129,6 +154,22 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         color:'#474747',
     },
+    textSty1: {
+        fontSize:24,
+        fontWeight:'bold',
+        color:'#474747',
+    },
 })
+const mapDispatchToProps =  {
+  
+    resetUserGroup
 
-export default UserConsoleComponent;
+  }
+  
+  const mapStateToProps = (state) => {
+    return {
+        userGroupCode: state
+        //state
+    }
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(UserConsoleComponent);

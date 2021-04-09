@@ -19,11 +19,13 @@ class AdminAddEvent extends Component {
             hours: '0',
             minutes: '0',
             room: '0',
-            event: '',
+            value: '',
             repeat:'none',
             roomList: []
         }
     }
+
+    
 
     setDate (newDate) {
         this.setState({date:newDate});
@@ -41,24 +43,25 @@ class AdminAddEvent extends Component {
         this.setState({room : newRoom});
     }
 
-    setEvent (newEvent) {
-        this.setState({event: newEvent});
+    setValue (newValue) {
+        this.setState({value: newValue});
     }
 
     setRepeat(newRepeat) {
         this.setState({repeat: newRepeat});
     }
 
-    sendRequest(room,startTime, endTime, currentTime, event, repeat) {
-        console.log(room,startTime, endTime, currentTime, event.value, repeat.value);
+    sendRequest(room, startTime, endTime, value, repeat) {
+        console.log(room,startTime, endTime, value, repeat.value);
         const request = JSON.stringify(
           { 
-            userid: 1,
+            //userid: 1,
+            //creator: creator,
+            //eventname:event.value,
+            eventname: value,
             roomnumber:room,
-            eventname:event.value,
             starttime:startTime,
             endtime:endTime,
-            requesttime:currentTime,
             repeat:repeat.value,
 
         });
@@ -86,33 +89,35 @@ class AdminAddEvent extends Component {
         //console.log("Send database request to get requests")
         this.getRooms();
           
-    }
+      }
+      getRooms(){
+        axios.post('http://10.0.2.2:8000/room_mgmt/user/rooms/')
+        // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
+        //     method: 'GET',
+        //     body: request
+        // })
+          .then(response => {
 
-    getRooms(){
-    console.log('Get requests');
-    const request = JSON.stringify(
-        { 
-        'userid': 'userid'
+              let rooms = response.data.roomslist;
+              let temp = [];
+              for (let i = 0; i < rooms.length; i++) {
+                  temp.push(rooms[i].roomnumber);
+              }
+              this.setState({roomList: temp})
+          })
+          .catch(function(error) {
+              console.log(error)
+          })
+      }
+        parseTime(date) {
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minutes = date.getMinutes();
+        var total = year + '-' + month + '-' + day + ' ' + hour + ':' + minutes;
 
-    });
-    axios.get('http://10.0.2.2:8000/room_mgmt/user/rooms/')
-    // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
-    //     method: 'GET',
-    //     body: request
-    // })
-        .then(response => {
-            //console.log('Hello?');
-            console.log(response);
-            let rooms = response.data.roomslist;
-            let temp = [];
-            for (let i = 0; i < rooms.length; i++) {
-                temp.push(rooms[i].roomnumber);
-            }
-            this.setState({roomList: temp})
-        })
-        .catch(function(error) {
-            console.log(error)
-        })
+        return total;
     }
 
     render() { 
@@ -126,6 +131,7 @@ class AdminAddEvent extends Component {
         let startDate = this.parseTime(this.state.date);
         let endDate = this.parseTime(endTime);
         let currentTime = this.parseTime(new Date());
+        let creator = "test";
         //console.log(startDate, endDate, currentTime);
 
         return ( 
@@ -134,7 +140,7 @@ class AdminAddEvent extends Component {
                 <Text style={styles.textSty}>Add Event To:</Text>
                 <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 <Text style={styles.textSty3}>Event Name:</Text>
-                <UserTextInput placeHolder = '' value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
+                <UserTextInput placeHolder = 'Enter Event Name Here' value = {this.state.value} setValue = {this.setValue.bind(this)}/>
                 <Text style={styles.textSty3}>Date and Time of Event:</Text>
                 <DateTimeSelector date = {this.state.date} setDate = {this.setDate.bind(this)}/>
                 <Text style={styles.textSty3}>Event Duration:</Text>
@@ -142,7 +148,7 @@ class AdminAddEvent extends Component {
                 <Text style={styles.textSty3}>Repeat:</Text>
                 <RepeatSelectDropdown repeat = {this.state.repeat} setRepeat = {this.setRepeat.bind(this)}/>
                 <Button 
-                        handleClick = {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.event, this.state.repeat)}
+                        handleClick = {() => this.sendRequest(this.state.room, startDate, endDate, this.state.value, this.state.repeat)}
                         label = "Add Event"
                     />
             </View>

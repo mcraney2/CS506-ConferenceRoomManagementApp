@@ -28,7 +28,7 @@ class RoomRequestList extends Component {
           groupid: 1
 
       });
-        axios.get('http://10.0.2.2:8000/room_mgmt/admin/requests/view/')
+        axios.post('http://10.0.2.2:8000/room_mgmt/admin/requests/view/')
         .then(response => {
             this.setState({requests: response.data.requestlist})
         })
