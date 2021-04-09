@@ -4,22 +4,24 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from "../components/Button.js";
 import { Calendar } from 'react-native-big-calendar'
+import Kiosk from "../components/KioskComponent.js"
 export function KioskMain({navigation}) {
   const events = [
     {
       title: 'Meeting',
-      start: new Date(2021, 3, 26, 10, 0),
-      end: new Date(2021, 3, 26, 10, 30),
+      start: new Date(2021, 4, 8, 10, 0),
+      end: new Date(2021, 4,8, 10, 30),
     },
     
   ]
     return (
         <View style={styles.container}>
-            <Text>Kiosk Main Display</Text>
+            {/* <Text>Kiosk Main Display</Text>
             <Text style={styles.textSty}>Room 1080</Text>
             <View style={styles.calendarContainer}>
-            <Calendar events={events} height={400} />
-          </View>
+            <Calendar events={events} height={400} /> */}
+            <Kiosk/>
+           {/* </View> */}
             <Button 
                 handleClick={() =>
                     navigation.navigate('LogInScreen')
