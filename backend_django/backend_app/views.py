@@ -19,8 +19,7 @@ import datetime
 # "room_mgmt/login/"
 # request format: {"username": "ruisu","password":"zrs12345"}
 # response format: response = {"authenticated": False,"type": "user/admin","new":False,"userid":"id"}
-
-
+# TODO: check the relation between admin and group
 @api_view(['POST'])
 def login(request):
     if request.method == 'POST':
@@ -197,6 +196,7 @@ def admin_process_request(request):
 # TODO: in edit event page, admin selects a date
 # "room_mgmt/admin/events/view/"
 # time format: '%Y-%m-%d',
+# TODO: add back admin id
 # request format: {"adminid":"adminid","date":"2021-03-26","roomid":"roomid"}
 # resposne format: {"eventslist": events_return_list}
 @api_view(['POST'])
@@ -241,9 +241,9 @@ def admin_view_events(request):
 # "room_mgmt/admin/events/edit/"
 # time format: '%Y-%m-%d',
 # PUT request format: {"eventid":"eventid","eventname":"a conference","roomnumber":"123","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30"}
-# PUT resposne format: {"eventid":"eventid","eventname":"a conference","roomnumber":"123","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30"}
+# PUT response  format: {"eventid":"eventid","eventname":"a conference","roomnumber":"123","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30"}
 # DELETE request format: {"eventid":"eventid"}
-# DELETE resposne format: {"eventid":"eventid"}
+# DELETE response  format: {"eventid":"eventid"}
 @api_view(['PUT', 'DELETE'])
 def admin_edit_event(request):
     if request.method == 'PUT':  # TODO: edit an event
@@ -347,8 +347,6 @@ def user_join_group(request):
 # "user/rooms/"
 # Request: {"userid":"userid"}
 # response: {"roomslist":list of room_dict}
-
-
 @api_view(['POST'])
 def user_view_rooms(request):
     if request.method == 'POST':
@@ -367,19 +365,86 @@ def user_view_rooms(request):
             rooms_list.append(room_dict)
         return JsonResponse({"roomslist": rooms_list}, status=201)
 
-# # TODO: user requests calendar for a selected room ; user switches between daily/weekly display of the calendar; user moves to the next/last day/week
-# # mode: "day/week"
-# # date format: "%Y-%m-%d"
-# # request format: {"userid":"userid","roomname":"roomname","mode":"day",firstday":"%Y-%m-%d"}
-# # response format:
-# @api_view(['GET'])
-# def user_join_group(request):
-#     if request.method == 'GET':
-#         data = JSONParser().parse(request)
+# TODO: user requests calendar for a selected room ; user switches between daily/weekly display of the calendar; user moves to the next/last day/week
+# "room_mgmt/user/calendar"
+# mode: "day/week"
+# date format: "%Y-%m-%d"
+# request format: {"userid":"userid","roomnumber":"roomnumber","mode":"day/week","date":"%Y-%m-%d"}
+# TODO: include user id
+# request format: {"roomnumber":"roomnumber","mode":"day",firstday":"%Y-%m-%d"}
+# response format: {"roomnumber":"roomnumber","datelist":[{"date":"date","eventlist":[{"eventid":"eventid",eventname":"eventname","roomnumber":"roomnumber","creator":"creator","date":"date","starttime":"starttime","endtime":"endtime"}]}]}
+@api_view(['POST'])
+def user_view_calendar(request):
+    if request.method == 'POST':
+        data = JSONParser().parse(request)
+        # try:
+        #     user = User.objects.get(id=data['userid'])
+        # except:
+        #     return JsonResponse({"error": "invalid user id"}, status=403)
+        try:
+            room = Room.objects.get(roomnumber=data["roomnumber"])
+        except:
+            return JsonResponse({"error": "request a room not being created"}, status=403)
+
+        date = datetime.date.fromisoformat(data['date'])
+        datelist = []
+
+        if data['mode'] == 'day':
+            try:
+                dailyCalendar = DailyCalendar.objects.get(date=date)
+            except:  # no events in given date
+                datelist.append({"date":data['date'],"eventlist":[]})
+                return JsonResponse({"roomnumber":data["roomnumber"],"datelist": datelist}, status=201)
+
+            events_by_date = DailyCalendar.objects.get(date=date).event_set.all()
+            events_by_date_room = events_by_date.filter(room=room).order_by('starttime')
+            events_return_list = []
+            for event in events_by_date_room:
+                events_return_dict = {
+                    "eventid": event.id,
+                    "eventname": event.eventname,
+                    "roomnumber": event.room.roomnumber,
+                    "creator": str(event.creator),
+                    "date": event.date.date,
+                    "starttime": event.starttime,
+                    "endtime": event.endtime,
+                }
+                events_return_list.append(events_return_dict)
+            datelist.append({"date": data['date'], "eventlist": events_return_list})
+            return JsonResponse({"roomnumber":data["roomnumber"],"datelist": datelist}, status=201)
+
+        elif data['mode'] == 'week':
+            year, week_num, day_of_week = date.isocalendar()
+            year_week_num = str(year) + '-W' + str(week_num)
+            print(year_week_num)
+            for i in range(1, 8):
+                currentdate = datetime.datetime.strptime(year_week_num + '-' + str(i), '%G-W%V-%u')
+                try:
+                    dailyCalendar = DailyCalendar.objects.get(date=currentdate)
+                    events_by_date = DailyCalendar.objects.get(date=currentdate).event_set.all()
+                    events_by_date_room = events_by_date.filter(room=room).order_by('starttime')
+                    events_return_list = []
+                    for event in events_by_date_room:
+                        events_return_dict = {
+                            "eventid": event.id,
+                            "eventname": event.eventname,
+                            "roomnumber": event.room.roomnumber,
+                            "creator": str(event.creator),
+                            "date": event.date.date,
+                            "starttime": event.starttime,
+                            "endtime": event.endtime,
+                        }
+                        events_return_list.append(events_return_dict)
+                    datelist.append({"date": currentdate, "eventlist": events_return_list})
+                except:  # no events in given date
+                    datelist.append({"date":currentdate,"eventlist":[]})
+            return JsonResponse({"roomnumber":data["roomnumber"],"datelist": datelist}, status=201)
+
+
 
 
 # user sends a request
-# "user/request"
+# "room_mgmt/user/request"
 # # time format: '%Y-%m-%d %H:%M',
 # request format: {"userid":"userid","groupid":"groupid","roomnumber":"number","eventname":"request name","reason":"reason texts","starttime":"2021-10-25 14:30","endtime":"2021-10-25 16:30","requesttime":"2021-03-25 14:30","repeat":"none"}
 # response format: {"eventname":"request name","requestid":"requestid"}
