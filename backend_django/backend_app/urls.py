@@ -11,7 +11,9 @@ urlpatterns = [
     path('admin/requests/process/', views.admin_process_request, name="admin_process_request"),
     path('admin/events/create/', views.admin_create_events, name="admin_create_events"),
     path('admin/events/view/', views.admin_view_events, name="admin_view_events"),
+    path('admin/events/edit/',views.admin_edit_event, name="admin_edit_event"),
     path('user/join_group/', views.user_join_group, name="user_join_group"),
     path('user/rooms/', views.user_view_rooms, name="user_view_rooms"),
+    path('user/calendar/', views.user_view_calendar, name="user_view_calendar"),
     path('user/request/', views.user_send_request, name="user_request"),
 ]
