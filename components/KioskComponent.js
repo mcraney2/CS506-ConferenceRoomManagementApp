@@ -91,21 +91,21 @@ import RoomSelectDropdown from '../components/RoomSelectDropdown'
               const request = JSON.stringify(
                 { 
                   
-           Roomnumber:"1080",
+           Roomnumber:"0",
               Mode:"week",
               date: year.toString() +'-'+month.toString() +'-' +date.toString()
               });
            
               
-                axios.post('http://10.0.2.2:8000/room_mgmt/user/calendar')
+                axios.post('http://10.0.2.2:8000/room_mgmt/user/calendar/')
                 .then(response => {
 
-                    let events = response.data.datelist;
+                    let event = response.data.datelist;
                     // let temp = [];
                     // for (let i = 0; i < rooms.length; i++) {
                     //     temp.push(rooms[i].roomnumber);
                     // }
-                    this.setState({events: events})
+                    this.setState({events: event})
                 })
                 .catch(function(error) {
                     console.log(error)
