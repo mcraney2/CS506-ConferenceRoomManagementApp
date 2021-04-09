@@ -7,11 +7,12 @@ import TextBox from "../components/TextBox.js"
 import LogInComponent from '../components/LogInComponent.js';
 import UserTextInput from '../components/UserTextInput.js';
 import axios from 'axios';
-
+import {setUserID} from '../actions/userIDActionCreator'
+import { useSelector, useDispatch } from 'react-redux';
 // Replace part of the return interior with the LogInComponent when we figure out how to navigate between screens from
 // components classes
 
-function sendRequest(username, password,authenticated, setAuthenticated, isAdmin, setIsAdmin, navigation,setLogInAttempt) {
+function sendRequest(username, password,authenticated, setAuthenticated, isAdmin, setIsAdmin, navigation,setLogInAttempt, dispatch) {
     const request = JSON.stringify(
       { 
         username: username,
@@ -23,8 +24,12 @@ function sendRequest(username, password,authenticated, setAuthenticated, isAdmin
         setLogInAttempt(true);
         setAuthenticated(response.data.authenticated);
         setIsAdmin(response.data.type);
-        console.log(response.data.authenticated);
-        response.data.authenticated == true ? response.data.type == "admin" ? navigation.navigate('ManagementConsole') : navigation.navigate('UserConsole') : navigation.navigate('LogInScreen');
+        console.log(response.data);
+        if (response.data.authenticated) {
+            console.log('userid: ', response.data.userid);
+            dispatch(setUserID(response.data.userid));
+        }
+        response.data.authenticated == true ? response.data.type == "admin" ? navigation.navigate('ManagementConsole') : navigation.navigate('UserGroupCode') : navigation.navigate('LogInScreen');
     })
     .catch(function (error) {
       
@@ -39,6 +44,7 @@ export function LogInScreen({navigation}) {
     const [authenticated, setAuthenticated] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [logInAttempt, setLogInAttempt] = useState(false);
+    const dispatch = useDispatch();
     //console.log(username);
     let invalid;
     if(logInAttempt && !authenticated) {
@@ -84,7 +90,7 @@ export function LogInScreen({navigation}) {
                 <Button 
                     handleClick={() =>
                         //password === 'pizza' ? navigation.navigate('ManagementConsole') : navigation.navigate('LogInScreen')
-                        sendRequest(username, password,authenticated, setAuthenticated,isAdmin, setIsAdmin, navigation,setLogInAttempt)
+                        sendRequest(username, password,authenticated, setAuthenticated,isAdmin, setIsAdmin, navigation,setLogInAttempt, dispatch)
                         
                     }
                     label="Log-In"

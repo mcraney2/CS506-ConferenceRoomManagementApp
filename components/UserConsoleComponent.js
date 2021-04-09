@@ -8,7 +8,9 @@ import axios from 'axios'
 import { TextInput } from 'react-native-gesture-handler';
 import RepeatSelectDropdown from './RepeatSelectDropdown';
 import { Calendar } from 'react-native-big-calendar'
-
+import {resetUserGroup} from '../actions/GroupCodeActionCreators'
+import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 class UserConsoleComponent extends Component {
     
     constructor(props) {
@@ -90,9 +92,14 @@ class UserConsoleComponent extends Component {
     }
 
     render() { 
+        //const counter = useSelector(state => state)
+        console.log("In UserConsoleComponent", this.props);
         return ( 
             <>
             <View>
+            {/* <Text style={styles.textSty}>User Group Code: {this.props.userGroupCode}</Text> */}
+            {/* <Text style={styles.textSty3}>{counter.userGroupCode}</Text>; */}
+                <Text style={styles.textSty1}>Group: {this.props.userGroupCode.groupCode.userGroupCode}</Text>
                 <Text style={styles.textSty3}>Room to View:</Text>
                 <View style={styles.selectContainer}>
                     <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
@@ -147,6 +154,22 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         color:'#474747',
     },
+    textSty1: {
+        fontSize:24,
+        fontWeight:'bold',
+        color:'#474747',
+    },
 })
+const mapDispatchToProps =  {
+  
+    resetUserGroup
 
-export default UserConsoleComponent;
+  }
+  
+  const mapStateToProps = (state) => {
+    return {
+        userGroupCode: state
+        //state
+    }
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(UserConsoleComponent);

@@ -17,15 +17,20 @@ import { FirstLogInAdmin } from './screens/FirstLogInAdmin';
 import { EditCalendarsAdmin }from './screens/EditCalendarsAdmin';
 import { CheckRequestsAdmin } from './screens/CheckRequestsAdmin';
 import { AddEventAdmin } from './screens/AddEventAdmin';
-import { UserConsole } from './screens/UserConsole';
+import  UserConsole  from './screens/UserConsole';
 import { FirstLogInUser } from './screens/FirstLogInUser';
 import { RequestRoomUser } from './screens/RequestRoomUser';
 import { SignUpScreen } from './screens/SignUpScreen';
 import { KioskMain } from './screens/KioskMain';
 import { KioskSetUp } from './screens/KioskSetUp';
 
+// I added this
+import UserGroupCode from './screens/UserGroupCode';
+import { Provider } from 'react-redux'
+import store from './store/configureStore'
 export default function App() {
   return (
+    <Provider store = {store}>
     <NavigationContainer>
       <Stack.Navigator 
         screenOptions={{
@@ -50,8 +55,10 @@ export default function App() {
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ title: 'Sign-Up' }}/>
         <Stack.Screen name="KioskMain" component={KioskMain} options={{ title: 'Kiosk Mode' }}/>
         <Stack.Screen name="KioskSetUp" component={KioskSetUp} options={{ title: 'Kiosk Set-Up' }}/>
+        <Stack.Screen name="UserGroupCode" component={UserGroupCode} options={{ title: 'Enter User Group Code' }}/>
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
 

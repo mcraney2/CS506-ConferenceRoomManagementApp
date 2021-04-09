@@ -9,7 +9,6 @@ export function RequestRoomUser({navigation}) {
     return (
         <>
         <View style={styles.container}>
-            <Text>Request Room User</Text>
             <UserRoomRequest/>
             
         </View>
