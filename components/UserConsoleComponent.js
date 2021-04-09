@@ -29,23 +29,24 @@ class UserConsoleComponent extends Component {
         this.setState({room : newRoom});
     }
 
+    /*
     sendRequest(room, date) {
         console.log(room, date);
         const request = JSON.stringify(
           { 
-            adminid: 1,
             date: date,
             roomid: room
         });
         axios.post('http://10.0.2.2:8000/room_mgmt/admin/events/view', request)  
         .then(function (response) {
             console.log(response);
-          this.state.events = response;
+          //this.state.events = response;
         })
         .catch(function (error) {
           console.log(error);
         });
     }
+    */
 
     parseTime(date) {
         var year = date.getFullYear();
@@ -77,6 +78,30 @@ class UserConsoleComponent extends Component {
                   temp.push(rooms[i].roomnumber);
               }
               this.setState({roomList: temp})
+
+              // Get all the events for the rooms
+              let date = new Date();
+              date = this.parseTime(date);
+              let events_temp = [];
+              for (let i = 0; i < rooms.length; i++) {
+                let room = rooms[i].roomnumber;
+                console.log(room, date);
+                const request = JSON.stringify(
+                  { 
+                    date: date,
+                    mode: "week",
+                    roomid: room,
+                });
+                axios.post('http://10.0.2.2:8000/room_mgmt/user/calendar/', request)  
+                .then(function (response) {
+                    console.log(response);
+                    events_temp.push(response);
+                  //this.state.events = response;
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+              }
           })
           .catch(function(error) {
               console.log(error)
@@ -85,7 +110,13 @@ class UserConsoleComponent extends Component {
         parseTime(date) {
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
+        if (Number(month) < 10) {
+            month = "0" + month;
+        }
         var day = date.getDate();
+        if (Number(day) < 10) {
+            day = "0" + day;
+        }
         var total = year + '-' + month + '-' + day;
 
         return total;
