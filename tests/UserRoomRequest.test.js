@@ -4,11 +4,14 @@ import  DurationDropDown  from '../components/DurationDropDown';
 import { fireEvent, render } from '@testing-library/react-native';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import UserRoomRequest from '../components/UserRoomRequest';
+//import UserRoomRequest  from '../components/UserRoomRequest';
 import RoomSelectDropdown from '../components/RoomSelectDropdown';
 import UserTextInput from '../components/UserTextInput';
 import { RequestRoomUser} from '../screens/RequestRoomUser';
 import {setMinutes} from '../components/UserRoomRequest'
+import { connect } from 'react-redux';
+
+import {UserRoomRequest} from '../components/UserRoomRequest'
 // test('Renders snapshot as expected', () => {
 //     const tree = renderer.create(<UserRoomRequest />).toJSON();
 //     expect(tree).toMatchSnapshot();

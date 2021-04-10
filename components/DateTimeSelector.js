@@ -30,8 +30,10 @@ class DateTimeSelector extends Component {
     showTimepicker = () => {
         this.showMode('time');
       };
-      getDate(date) {
-          
+    getDate(date) {
+      if (date ===undefined || date.getTime() !== date.getTime()) {
+        return ''
+      }  
           
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
@@ -48,7 +50,9 @@ class DateTimeSelector extends Component {
     }
   getTime(date) {
       
-      
+      if (date === undefined || date.getTime() !== date.getTime()) {
+        return ''
+      }
       var hour = date.getHours();
       if (parseInt(hour, 10) < 10) {
         hour = '0' + hour;

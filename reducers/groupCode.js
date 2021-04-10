@@ -5,8 +5,8 @@ const groupCode = (state = '', action) => {
         case 'SET_USER_GROUP':
             
             return {
-                userGroupCode: action.payload.groupcode,
-                userGroupID: action.payload.groupid
+                userGroupCode: action.payload,
+                
             }
         case 'RESET_USER_GROUP':
             return {

@@ -6,7 +6,8 @@ import Button from "../components/Button.js";
 import TextBox from "../components/TextBox.js"
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { setUserGroup, resetUserGroup } from '../actions/GroupCodeActionCreators';
+import { setUserGroup } from '../actions/GroupCodeActionCreators';
+import {setGroupID} from '../actions/groupIDActionCreator'
 import { useSelector, useDispatch } from 'react-redux';
 // Replace part of the return interior with the LogInComponent when we figure out how to navigate between screens from
 // components classes
@@ -37,10 +38,8 @@ function sendRequest(groupcode, navigation, dispatch) {
     });
      axios.post('http://10.0.2.2:8000/room_mgmt/user/join_group/', request) 
      .then(function (response) {
-       dispatch(setUserGroup(
-           {groupcode: groupcode,
-            groupid: response.data.groupid
-           }));
+       dispatch(setUserGroup(groupcode))
+       dispatch(setGroupID(response.data.groupid));
        navigation.navigate('UserConsole');
     })
     .catch(function (error) {
@@ -52,7 +51,7 @@ function sendRequest(groupcode, navigation, dispatch) {
 
 function UserGroupCode({navigation}) {
     const [groupcode, setGroupcode] = useState('');
-    const [groupname, setGroupname] = useState('');
+    //const [groupname, setGroupname] = useState('');
     const counter = useSelector(state => state);
     const dispatch = useDispatch();
     //console.log(counter);
@@ -70,7 +69,7 @@ function UserGroupCode({navigation}) {
 
                   
            
-                <Text style={styles.textSty}>Admin Create Group</Text>
+                {/* <Text style={styles.textSty}>Admin Create Group</Text>
                 <TextBox 
                     height={100}
                     width={250}
@@ -88,7 +87,7 @@ function UserGroupCode({navigation}) {
                         
                     }
                     label="Enter"
-                />
+                /> */}
 
 
                 <Text style={styles.textSty}>Enter Group Code</Text>
