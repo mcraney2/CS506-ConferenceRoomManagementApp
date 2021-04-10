@@ -10,8 +10,11 @@ npm-debug.*
 web-build/
 sftp.json
 backend_django/db.sqlite3
-
+package.json
+package-lock.json
 backend_django/**/*
 *.sqlite3
 # macOS
 .DS_Store
+backend_django/backend_app/__pycache__/*
+
