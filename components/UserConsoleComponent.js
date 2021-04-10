@@ -23,30 +23,16 @@ class UserConsoleComponent extends Component {
         }
     }
 
+    updateEvents = (eventList) => {
+        this.setState({events:eventList});
+    }
+
     // Want to set-it up so that initial page load and any time this room is changed, database is queried
     // for the events for that room
     setRoom (newRoom) {
         this.setState({room : newRoom});
     }
 
-    /*
-    sendRequest(room, date) {
-        console.log(room, date);
-        const request = JSON.stringify(
-          { 
-            date: date,
-            roomid: room
-        });
-        axios.post('http://10.0.2.2:8000/room_mgmt/admin/events/view', request)  
-        .then(function (response) {
-            console.log(response);
-          //this.state.events = response;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-    */
 
     parseTime(date) {
         var year = date.getFullYear();
@@ -77,7 +63,7 @@ class UserConsoleComponent extends Component {
               for (let i = 0; i < rooms.length; i++) {
                   temp.push(rooms[i].roomnumber);
               }
-              this.setState({roomList: temp})
+              this.setState({roomList: temp});
 
               // Get all the events for the rooms
               let date = new Date();
@@ -90,13 +76,44 @@ class UserConsoleComponent extends Component {
                   { 
                     date: date,
                     mode: "week",
-                    roomid: room,
+                    roomnumber: room,
                 });
                 axios.post('http://10.0.2.2:8000/room_mgmt/user/calendar/', request)  
                 .then(function (response) {
-                    console.log(response);
-                    events_temp.push(response);
-                  //this.state.events = response;
+                    console.log("Room Num: ");
+                    console.log(response.data.roomnumber);
+                    console.log("\nDateList: ")
+                    console.log(response.data.datelist);
+                    let date_list = response.data.datelist;
+                    let events_temp = [];
+                    for(let j = 0; j < date_list.length; j++) {
+
+                        let event_list = response.data.datelist[j].eventlist;
+                        console.log("Events List: \n" + event_list);
+
+                        for(let k = 0; k < event_list.length; k++) {
+                            let start_date = event_list[k].starttime;
+                            let end_date = event_list[k].endtime;
+                            let event_name = event_list[k].eventname;
+
+                            console.log("Event Name: \n" + event_name);
+                            console.log("Start Time: \n" + start_date);
+                            console.log("End Time: \n" + end_date);
+
+                            let event = {
+                                title: event_name, 
+                                start: new Date(start_date), 
+                                end: new Date(end_date)
+                            };
+
+                            console.log("Object Title: \n" + event.title + "Start : \n" + event.start + "End : \n" + event.end);
+                            console.log("Event: \n" + event);
+
+                            events_temp.push(event);
+                        }
+                    }
+                    console.log("Events List: \n" + events_temp);
+                    this.updateEvents(events_temp);
                 })
                 .catch(function (error) {
                   console.log(error);
