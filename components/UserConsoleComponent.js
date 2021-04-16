@@ -11,7 +11,7 @@ import { Calendar } from 'react-native-big-calendar'
 import {resetUserGroup} from '../actions/GroupCodeActionCreators'
 import { connect } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
-class UserConsoleComponent extends Component {
+export class UserConsoleComponent extends Component {
     
     constructor(props) {
         super(props);
@@ -147,7 +147,7 @@ class UserConsoleComponent extends Component {
             <View>
             {/* <Text style={styles.textSty}>User Group Code: {this.props.userGroupCode}</Text> */}
             {/* <Text style={styles.textSty3}>{counter.userGroupCode}</Text>; */}
-                <Text style={styles.textSty1}>Group: {this.props.userGroupCode.groupCode.userGroupCode}</Text>
+                <Text style={styles.textSty1}>Group: {this.props.userGroupCode}</Text>
                 <Text style={styles.textSty3}>Room to View:</Text>
                 <View style={styles.selectContainer}>
                     <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
@@ -216,8 +216,10 @@ const mapDispatchToProps =  {
   
   const mapStateToProps = (state) => {
     return {
-        userGroupCode: state
+        userGroupCode: state.groupCode.userGroupCode,
+        userGroupID: state.groupID.userGroupID
         //state
     }
   }
+//export class UserConsoleComponentTest extends Component{};
 export default connect(mapStateToProps, mapDispatchToProps)(UserConsoleComponent);

@@ -3,7 +3,6 @@ const userID = (state = '', action) => {
     switch(action.type)
     {
         case 'SET_USER_ID':
-            console.log('reducer', action.payload);
             return {
                 userid: action.payload
             };

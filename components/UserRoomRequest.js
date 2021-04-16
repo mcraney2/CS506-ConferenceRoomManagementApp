@@ -9,7 +9,7 @@ import Button from './Button'
 import axios from 'axios'
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
-class UserRoomRequest extends Component {
+export class UserRoomRequest extends Component {
     constructor(props) {
         super(props);
         this.state = { 
@@ -59,7 +59,7 @@ class UserRoomRequest extends Component {
         //////////////////END ZACH TESTING ROOM AREA////////////////////////////
         const request = JSON.stringify(
           { 
-            userid: userid,
+            userid:userid,
             groupid:groupid,
             roomnumber:room,
             eventname:event,
@@ -72,7 +72,7 @@ class UserRoomRequest extends Component {
         });
         axios.post('http://10.0.2.2:8000/room_mgmt/user/request/', request)
         .then(function (response) {
-          console.log(response);
+          //console.log(response);
         })
         .catch(function (error) {
           console.log(error);
@@ -137,7 +137,7 @@ class UserRoomRequest extends Component {
                     handleClick= {this.sendRequest(this.room, startDate, endDate, currentTime)}
                     label="Send Request"
                 /> */}
-                <Text >Group: {this.props.userGroupCode.groupCode.userGroupCode}</Text>
+                <Text >Group: {this.props.userGroupCode}</Text>
                 <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
                 <DateTimeSelector date = {this.state.date} setDate = {this.setDate.bind(this)}/>
                 <DurationDropDown minutes = {this.state.minutes} setMinutes = {this.setMinutes.bind(this)} hours = {this.state.hours} setHours = {this.setHours.bind(this)}/>
@@ -146,7 +146,7 @@ class UserRoomRequest extends Component {
                 <UserTextInput placeHolder = 'Enter reason for room request'value = {this.state.reason} setValue = {this.setReason.bind(this)}/>
                 <UserTextInput placeHolder = 'Enter event name'value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
                 <Button 
-                    handleClick= {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.reason, this.state.event, this.props.userGroupCode.groupCode.userGroupID, this.props.userGroupCode.userID.userid)}
+                    handleClick= {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.reason, this.state.event, this.props.userGroupID, this.props.userid)}
                     //handleClick= {() => this.getRooms()}
                     label="Send Request"
                 />
@@ -182,7 +182,9 @@ const mapDispatchToProps =  {
   
   const mapStateToProps = (state) => {
     return {
-        userGroupCode: state
+        userGroupCode: state.groupCode.userGroupCode,
+        userGroupID: state.groupID.userGroupID,
+        userid: state.userID.userid
     }
   }
 export default connect(mapStateToProps, mapDispatchToProps)(UserRoomRequest);

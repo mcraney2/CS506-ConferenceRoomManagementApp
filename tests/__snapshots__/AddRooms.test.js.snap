@@ -14,9 +14,13 @@ exports[`Renders AddRoom snapshot as expected 1`] = `
     placeholder="Conference Room Name/Number"
     rejectResponderTermination={true}
     style={
-      Array [
-        30,
-      ]
+      Object {
+        "borderColor": "grey",
+        "borderWidth": 1,
+        "height": 30,
+        "margin": 10,
+        "width": 250,
+      }
     }
     testID="text"
     underlineColorAndroid="transparent"
