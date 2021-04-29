@@ -10,23 +10,25 @@ export function RequestRoomUser({navigation}) {
         <>
         <View style={styles.container}>
             <UserRoomRequest/>
-            
+            <View style={styles.margin}>
+                <View style={styles.button}>
+                    <Button 
+                    handleClick={() =>
+                        navigation.navigate('UserConsole')
+                    }
+                    label="Request"
+                    />
+                </View>
+                <View style={styles.button}>
+                    <Button 
+                    handleClick={() =>
+                        navigation.navigate('UserConsole')
+                    }
+                    label="Exit"
+                    />
+                </View>
+            </View>
         </View>
-        <View style = {styles.button}>
-                <Button 
-                handleClick={() =>
-                    navigation.navigate('UserConsole')
-                }
-                label="Request"
-                />
-                <Button 
-                handleClick={() =>
-                    navigation.navigate('UserConsole')
-                }
-                label="Exit"
-                />
-
-</View>
 </>
     );
   }
@@ -35,13 +37,19 @@ export function RequestRoomUser({navigation}) {
     container: {
       flex: 1,
       backgroundColor: '#fff',
-      alignItems: 'center',
+      //alignItems: 'center',
       justifyContent: 'flex-start',
     },
     button: {
-        flex: 1,
+        //flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'flex-end',
-      },
+        marginTop: 5
+    },
+    margin: {
+        marginTop: 150,
+        marginBottom: 20,
+        alignItems: 'center',
+    },
   });

@@ -48,7 +48,7 @@ export function LogInScreen({navigation}) {
     //console.log(username);
     let invalid;
     if(logInAttempt && !authenticated) {
-        invalid = <Text style={styles.textSty3}>Incorrect username or password</Text>
+        invalid = <Text style={styles.textSty3}>Incorrect username or password.</Text>
     }
     else {
         invalid = <Text></Text>
@@ -96,8 +96,6 @@ export function LogInScreen({navigation}) {
                     label="Log-In"
                 />
                 {invalid}
-            </View>
-            <View style={styles.SecondaryContainer}>
                 <Text style={styles.textSty}>New Users</Text>
                 <Button 
                     handleClick={() =>
@@ -105,9 +103,8 @@ export function LogInScreen({navigation}) {
                     }
                     label="Enter"
                 />
-            </View>
-            <View style={styles.SecondaryContainer}>
                 <Text style={styles.textSty}>Kiosk Mode</Text>
+                
                 <Button 
                     handleClick={() =>
                         navigation.navigate('KioskSetUp')
@@ -125,20 +122,25 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
+      //justifyContent: 'center',
+      marginBottom: 10,
     },
     LogInContainer: {
-        flex:0.4,
+      flex:0.4,
+      alignItems: 'center',
+      marginTop: 20,
     },
     SecondaryContainer: {
-        flex:0.3,
+      flex:0.3,
+      alignItems: 'center',
+      marginTop: 20,
     },
     textSty: {
-        fontSize:30,
-        fontWeight:'bold',
-        margin: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
+      fontSize:30,
+      fontWeight:'bold',
+      alignItems: 'center',
+      //justifyContent: 'center',
+      marginTop: 20,
     },
     textSty3: {
         fontSize:20,

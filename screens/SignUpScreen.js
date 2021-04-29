@@ -23,7 +23,7 @@ export function SignUpScreen({navigation}) {
                     handleClick={() =>
                         navigation.navigate('LogInScreen')
                     }
-                    label="Cancel"
+                    label="Exit"
                 />
             </View>
         </View>
@@ -44,7 +44,7 @@ export function SignUpScreen({navigation}) {
     container3: {
         backgroundColor: '#fff',
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 50,
     },
     textSty: {
         fontSize:30,
