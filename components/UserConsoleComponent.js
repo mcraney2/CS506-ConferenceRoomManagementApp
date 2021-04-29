@@ -23,7 +23,7 @@ export class UserConsoleComponent extends Component {
         }
     }
 
-    updateEvents = (eventList) => {
+    updateEvents (eventList)  {
         this.setState({events:eventList});
     }
 
@@ -79,7 +79,7 @@ export class UserConsoleComponent extends Component {
                     roomnumber: room,
                 });
                 axios.post('http://10.0.2.2:8000/room_mgmt/user/calendar/', request)  
-                .then(function (response) {
+                .then(response => {
                     console.log("Room Num: ");
                     console.log(response.data.roomnumber);
                     console.log("\nDateList: ")
@@ -106,7 +106,7 @@ export class UserConsoleComponent extends Component {
                                 end: new Date(end_date)
                             };
 
-                            console.log("Object Title: \n" + event.title + "Start : \n" + event.start + "End : \n" + event.end);
+                            console.log("Object Title: \n" + event.title + "\nStart : \n" + event.start + "\nEnd : \n" + event.end);
                             console.log("Event: \n" + event);
 
                             events_temp.push(event);
