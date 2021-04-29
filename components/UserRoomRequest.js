@@ -137,19 +137,29 @@ export class UserRoomRequest extends Component {
                     handleClick= {this.sendRequest(this.room, startDate, endDate, currentTime)}
                     label="Send Request"
                 /> */}
-                <Text >Group: {this.props.userGroupCode}</Text>
-                <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
-                <DateTimeSelector date = {this.state.date} setDate = {this.setDate.bind(this)}/>
-                <DurationDropDown minutes = {this.state.minutes} setMinutes = {this.setMinutes.bind(this)} hours = {this.state.hours} setHours = {this.setHours.bind(this)}/>
-                
-                
-                <UserTextInput placeHolder = 'Enter reason for room request'value = {this.state.reason} setValue = {this.setReason.bind(this)}/>
-                <UserTextInput placeHolder = 'Enter event name'value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
-                <Button 
-                    handleClick= {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.reason, this.state.event, this.props.userGroupID, this.props.userid)}
-                    //handleClick= {() => this.getRooms()}
-                    label="Send Request"
-                />
+                <Text style={styles.textSty}>Group: {this.props.userGroupCode}</Text>
+                <View style={styles.margin}>
+                    <RoomSelectDropdown room = {this.state.room} setRoom = {this.setRoom.bind(this)} roomList = {this.state.roomList}/>
+                </View>
+                <View style={styles.button}>
+                    <DateTimeSelector date = {this.state.date} setDate = {this.setDate.bind(this)}/>
+                </View>
+                <View style={styles.margin}>
+                    <DurationDropDown minutes = {this.state.minutes} setMinutes = {this.setMinutes.bind(this)} hours = {this.state.hours} setHours = {this.setHours.bind(this)}/>
+                </View>
+                <View style={styles.textBox}>
+                    <UserTextInput placeHolder = 'Enter reason for room request'value = {this.state.reason} setValue = {this.setReason.bind(this)}/>
+                </View>
+                <View style={styles.textBox}>
+                    <UserTextInput placeHolder = 'Enter event name'value = {this.state.event} setValue = {this.setEvent.bind(this)}/>
+                </View>
+                <View style={styles.button}>
+                    <Button 
+                        handleClick= {() => this.sendRequest(this.state.room, startDate, endDate, currentTime,this.state.reason, this.state.event, this.props.userGroupID, this.props.userid)}
+                        //handleClick= {() => this.getRooms()}
+                        label="Send Request"
+                    />
+                </View>
                 {/* <Text>{this.state.reason}</Text> */}
                 {/* <TextInput
                     style={styles.input}
@@ -172,6 +182,29 @@ const styles = StyleSheet.create({
         lineHeight: 23,
         flex: 2,
         textAlignVertical: 'top'
+    },
+    textSty: {
+      fontSize:20,
+      fontWeight:'bold',
+      alignItems: 'center',
+      //justifyContent: 'center',
+      marginBottom: 5,
+      
+    },
+    margin: {
+        marginTop: 20,
+        marginBottom: 20,
+        alignItems: 'center',
+    },
+    button: {
+        //flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    textBox: {
+        alignItems: 'center',
     },
 })
 const mapDispatchToProps =  {

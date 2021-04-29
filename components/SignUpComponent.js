@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacityBase, View,StyleSheet} from 'react-native';
-
+import { Text, TouchableOpacityBase, View,StyleSheet, Alert} from 'react-native';
 import DateTimeSelector from './DateTimeSelector'
 import DurationDropDown from './DurationDropDown'
 import RoomSelectDropdown from './RoomSelectDropdown'
@@ -12,11 +11,13 @@ import UserTextInput from './UserTextInput'
 class SignUp extends Component {
     constructor(props) {
         super(props);
+        
         this.state = {
             username: '',
             pass: '',
             passCheck: '',
             admin: 'User',
+            signedUp: 'NA',
         }
     }
     setUsername (newName) {
@@ -31,13 +32,24 @@ class SignUp extends Component {
     setAdmin (newAdmin) {
         this.setState({admin:newAdmin});
     }
+    setSignedUp (newSignedUp) {
+        this.setState({signedUp:newSignedUp});
+    }
+    success(response) {
+        console.log(response);
+        this.setSignedUp ('Success');
+    }
+    fail(error) {
+        console.log(error);
+        this.setSignedUp('UniqUser');
+    }
     sendRequest(userName, pass, passcheck, usertype) {
         console.log(userName, pass, usertype);
         var isUser = true;
         if(usertype == 'Admin') {
             isUser = false;
         }
-        if(pass == passcheck) {
+        if(pass == passcheck && pass != '' && userName != '') {
             const request = JSON.stringify(
             { 
                 username:userName,
@@ -45,24 +57,53 @@ class SignUp extends Component {
                 user:isUser,
             });
             axios.post('http://10.0.2.2:8000/room_mgmt/signup/', request)
-            .then(function (response) {
-            console.log(response);
+            .then((response) => {
+                this.success(response);
             })
-            .catch(function (error) {
-            console.log(error);
+            .catch((error) => {
+                this.fail(error);
             });
+        }
+        else if(userName == '') {
+            console.log('Username is Empty');
+            this.setSignedUp('UserEmpty');
+        }
+        else if(pass == '') {
+            console.log('Password is empty.');
+            this.setSignedUp('PassEmpty');
         }
         else {
             console.log('Passwords do not match.');
+            this.setSignedUp('PassMatch');
         }
     }
     render() {
         let passMatch;
+        let signUpSuccess;
         if(this.state.passCheck != this.state.pass) {
             passMatch = <Text style={styles.textSty3}>Passwords do not match.</Text>
         }
         else {
             passMatch = <Text></Text>
+        }
+        if(this.state.signedUp == 'Success') {
+            signUpSuccess = <Text style={styles.textSty4}>Sign-Up Successful.{"\n"}Please Exit and Continue to LogIn.</Text>
+            
+        }
+        else if(this.state.signedUp == 'PassMatch') {
+            signUpSuccess = <Text style={styles.textSty3}>Sign-Up Unsuccessful.{"\n"}Passwords Don't Match.</Text>
+        }
+        else if(this.state.signedUp == 'UniqUser') {
+            signUpSuccess = <Text style={styles.textSty3}>Sign-Up Unsuccessful. {"\n"}Username May Already Be Taken.</Text>
+        }
+        else if(this.state.signedUp == 'UserEmpty') {
+            signUpSuccess = <Text style={styles.textSty3}>Sign-Up Unsuccessful. {"\n"}Username Is Empty.</Text>
+        }
+        else if(this.state.signedUp == 'PassEmpty') {
+            signUpSuccess = <Text style={styles.textSty3}>Sign-Up Unsuccessful. {"\n"}Password Is Empty.</Text>
+        }
+        else {
+            signUpSuccess = <Text></Text>
         }
         return (
             <View>
@@ -86,18 +127,22 @@ class SignUp extends Component {
                 />
                 {passMatch}
                 <Text style={styles.textSty2}>Role: {this.state.admin}</Text>
-                <Button
-                    handleClick={
-                        () => this.setAdmin('User')
-                    }
-                    label="User"
-                />
-                <Button
-                    handleClick={
-                        () => this.setAdmin('Admin')
-                    }
-                    label="Administrator"
-                />
+                <View style={styles.button}>
+                    <Button
+                        handleClick={
+                            () => this.setAdmin('User')
+                        }
+                        label="User"
+                    />
+                </View>
+                <View style={styles.button}>
+                    <Button
+                        handleClick={
+                            () => this.setAdmin('Admin')
+                        }
+                        label="Administrator"
+                    />
+                </View>
                 <View style={styles.container3}>
                     <Button 
                         handleClick={
@@ -106,6 +151,7 @@ class SignUp extends Component {
                         label="Sign-Up"
                     />
                 </View>
+                {signUpSuccess}
             </View>
         );
     }
@@ -126,7 +172,7 @@ const styles = StyleSheet.create({
     container3: {
         backgroundColor: '#fff',
         alignItems: 'center',
-        marginTop: 10,
+        marginTop: 50,
     },
     textSty: {
         fontSize:30,
@@ -134,10 +180,24 @@ const styles = StyleSheet.create({
     },
     textSty2: {
         fontSize:20,
+        alignItems: 'center',
     },
     textSty3: {
         fontSize:20,
+        alignItems: 'center',
         color:'red',
+    },
+    textSty4: {
+        fontSize:20,
+        alignItems: 'center',
+        color:'green',
+    },
+    button: {
+        //flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        marginTop: 5,
+        marginBottom: 5,
     },
   });
 

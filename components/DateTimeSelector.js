@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Platform, Text} from 'react-native';
+import {View, Platform, Text, StyleSheet} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Button from './Button'
 class DateTimeSelector extends Component {
@@ -69,14 +69,14 @@ class DateTimeSelector extends Component {
         
         return (  
             <View>
-                <View>
+                <View style={styles.margin}>
                     
                     <Button handleClick={this.showDatepicker} label="Select Date" />
-                    <Text>Current Date: {this.getDate(this.props.date)}</Text>
+                    <Text style={styles.textSty}>Current Date: {this.getDate(this.props.date)}</Text>
                 </View>
                 <View>
                     <Button handleClick={this.showTimepicker} label="Select Time" />
-                    <Text>Time: {this.getTime(this.props.date)}</Text>
+                    <Text style={styles.textSty}>Time: {this.getTime(this.props.date)}</Text>
                 </View>
                 {this.state.show && (
                     <DateTimePicker
@@ -92,6 +92,19 @@ class DateTimeSelector extends Component {
         );
     }
 }
+
+const styles = StyleSheet.create({
+    margin: {
+        marginBottom: 10,
+    },
+    textSty: {
+      fontSize:15,
+      alignItems: 'center',
+      //justifyContent: 'center',
+      marginBottom: 10,
+      
+    },
+})
  
 export default DateTimeSelector;
 
