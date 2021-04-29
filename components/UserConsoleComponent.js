@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacityBase, View,StyleSheet} from 'react-native';
-
 import RoomSelectDropdown from '../components/RoomSelectDropdown'
 import UserTextInput from '../components/UserTextInput'
 import Button from '../components/Button'
