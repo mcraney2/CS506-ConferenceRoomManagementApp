@@ -10,6 +10,7 @@ import { Calendar } from 'react-native-big-calendar'
 import {resetUserGroup} from '../actions/GroupCodeActionCreators'
 import { connect } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
+console.disableYellowBox = true;
 
 
 

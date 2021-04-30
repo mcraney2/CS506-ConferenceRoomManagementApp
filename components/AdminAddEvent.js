@@ -92,7 +92,7 @@ class AdminAddEvent extends Component {
         //     body: request
         // })
           .then(response => {
-              createRoomsList(response.data.roomslist);
+              this.createRoomList(response.data.roomslist);
           })
           .catch(function(error) {
               console.log(error)

@@ -9,6 +9,8 @@ import Button from './Button'
 import axios from 'axios'
 import { TextInput } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
+console.disableYellowBox = true;
+
 export class UserRoomRequest extends Component {
     constructor(props) {
         super(props);
@@ -100,10 +102,7 @@ export class UserRoomRequest extends Component {
         //     body: request
         // })
           .then(response => {
-
-              
-              createRoomsList(response.data.roomslist);
-
+              this.createRoomList(response.data.roomslist);
           })
           .catch(function(error) {
               console.log(error)
