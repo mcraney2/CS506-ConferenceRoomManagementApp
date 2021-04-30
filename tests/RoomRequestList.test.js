@@ -26,6 +26,15 @@ test('Converts a Date object to MM/DD/YYYY format', () => {
     expect(answer).toBe('02/02/2016');
 })
 
+test('Converts a Date object to MM/DD/YYYY format', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<RoomRequestList />);
+    const instance = test.instance();
+    requests = [ {room: 5, requests: [4,5]}, {room: 6, requests: [4,5]}, {room: 7, requests: [4,5]}]
+    console.log(requests)
+    console.log(instance.createArray(requests))
+})
+
 test('Converts a Date object to HH:MM format', () => {
     Enzyme.configure({adapter: new Adapter()})
     const test = shallow(<AdminRoomRequest/>);

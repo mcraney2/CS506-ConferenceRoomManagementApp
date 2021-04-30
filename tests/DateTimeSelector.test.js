@@ -7,7 +7,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import AdminAddEvent from '../components/AdminAddEvent';
 import RoomSelectDropdown from '../components/RoomSelectDropdown';
 import UserTextInput from '../components/UserTextInput';
-import { RequestRoomUser} from '../screens/RequestRoomUser';
 import {setMinutes} from '../components/AdminAddEvent'
 import RepeatSelectDropdown from '../components/RepeatSelectDropdown';
 

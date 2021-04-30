@@ -24,9 +24,6 @@ class AdminAddEvent extends Component {
             roomList: []
         }
     }
-
-    
-
     setDate (newDate) {
         this.setState({date:newDate});
     }
@@ -74,17 +71,15 @@ class AdminAddEvent extends Component {
         });
     }
 
-    parseTime(date) {
-        var year = date.getFullYear();
-        var month = date.getMonth() + 1;
-        var day = date.getDate();
-        var hour = date.getHours();
-        var minutes = date.getMinutes();
-        var total = year + '-' + month + '-' + day + ' ' + hour + ':' + minutes;
 
-        return total;
+    createRoomList(roomslist) {
+              let rooms =roomslist;
+              let temp = [];
+              for (let i = 0; i < rooms.length; i++) {
+                  temp.push(rooms[i].roomnumber);
+              }
+              this.setState({roomList: temp})
     }
-
     componentDidMount() {
         //console.log("Send database request to get requests")
         this.getRooms();
@@ -97,13 +92,7 @@ class AdminAddEvent extends Component {
         //     body: request
         // })
           .then(response => {
-
-              let rooms = response.data.roomslist;
-              let temp = [];
-              for (let i = 0; i < rooms.length; i++) {
-                  temp.push(rooms[i].roomnumber);
-              }
-              this.setState({roomList: temp})
+              createRoomsList(response.data.roomslist);
           })
           .catch(function(error) {
               console.log(error)

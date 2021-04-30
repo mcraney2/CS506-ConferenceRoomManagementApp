@@ -7,12 +7,12 @@ import Adapter from 'enzyme-adapter-react-16';
 import UserRoomRequest from '../components/UserRoomRequest';
 import RoomSelectDropdown  from '../components/RoomSelectDropdown';
 import UserTextInput from '../components/UserTextInput';
-import { RequestRoomUser} from '../screens/RequestRoomUser';
+
 import {setMinutes} from '../components/UserRoomRequest'
 //import UserConsoleComponent from '../components/UserConsoleComponent';
 import {UserConsoleComponent} from '../components/UserConsoleComponent';
 import {UserConsoleComponentTest} from '../components/UserConsoleComponent';
-import configureMockStore from 'redux-mock-store';
+//import configureMockStore from 'redux-mock-store';
 //import { render, fireEvent, screen } from './test-utils'
 
 import store from '../store/configureStore'
@@ -47,25 +47,44 @@ const setup = (initialState={}) => {
 
 test('Room handler sets the state of the room', () => {
     Enzyme.configure({adapter: new Adapter()})
-    //const mockStore = configureMockStore({});
-    // const initialState = {
-    //                             userGroupCode: { groupCode:{ userGroupCode: 'yahoo'}}};
-        //store = mockStore(initialState.userGroupCode.groupCode.userGroupCode);
-        
-        //setup()
-    //     const component = (
-    //         <Provider store={store}>
-    //           <UserConsoleComponentTest />
-    //         </Provider>
-    //       );
         const test = shallow(<UserConsoleComponent/>);
         const instance = test.instance();
- 
-
-    // // const instance = test.instance();
-    // // console.log("Hello");
-    // // console.log(test.debug()); 
       instance.setRoom('2000');
       expect(test.state('room')).toBe('2000');
+});
+test('Set Event List', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<UserConsoleComponent/>);
+    const instance = test.instance();
+
+    datelist = [
+        {eventlist: [{
+            starttime: '4',
+            endtime: '5',
+            eventname:'test'
+        }]}
+
+    ]
+      instance.setEventList(datelist, '5');
+});
+
+test('parseTime', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<UserConsoleComponent/>);
+    const instance = test.instance();
+    date = new Date(2021, 4, 7,4,30,25,0);
+    answer = instance.parseTime(date);
+    expect(answer === '2021-5-7 4:30');
+
+})
+
+test('Create Room List', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<UserConsoleComponent/>);
+    const instance = test.instance();
+    list = [{roomnumber: 5}, {roomnumber: 4}, {roomnumber: 3}]
+    answer = [5,4,3]
+    instance.createRoomList(list);
+    expect(test.state('roomList')).toStrictEqual(answer);
 });
 

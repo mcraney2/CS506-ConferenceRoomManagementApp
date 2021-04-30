@@ -7,7 +7,7 @@ import Adapter from 'enzyme-adapter-react-16';
 //import UserRoomRequest  from '../components/UserRoomRequest';
 import RoomSelectDropdown from '../components/RoomSelectDropdown';
 import UserTextInput from '../components/UserTextInput';
-import { RequestRoomUser} from '../screens/RequestRoomUser';
+
 import {setMinutes} from '../components/UserRoomRequest'
 import { connect } from 'react-redux';
 
@@ -149,3 +149,14 @@ test('All states are initialized correctly', () => {
     expect(test.state('event')).toBe('');
     // I dont test date here since Date just gets the current date
   });
+
+
+  test('Create Room List', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<UserRoomRequest/>);
+    const instance = test.instance();
+    list = [{roomnumber: 5}, {roomnumber: 4}, {roomnumber: 3}]
+    answer = [5,4,3]
+    instance.createRoomList(list);
+    expect(test.state('roomList')).toStrictEqual(answer);
+});

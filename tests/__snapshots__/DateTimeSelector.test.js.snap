@@ -2,7 +2,13 @@
 
 exports[`Renders DateTimeSelector snapshot as expected 1`] = `
 <View>
-  <View>
+  <View
+    style={
+      Object {
+        "marginBottom": 10,
+      }
+    }
+  >
     <View
       accessible={true}
       focusable={true}
@@ -43,7 +49,15 @@ exports[`Renders DateTimeSelector snapshot as expected 1`] = `
         </Text>
       </View>
     </View>
-    <Text>
+    <Text
+      style={
+        Object {
+          "alignItems": "center",
+          "fontSize": 15,
+          "marginBottom": 10,
+        }
+      }
+    >
       Current Date: 
       
     </Text>
@@ -89,7 +103,15 @@ exports[`Renders DateTimeSelector snapshot as expected 1`] = `
         </Text>
       </View>
     </View>
-    <Text>
+    <Text
+      style={
+        Object {
+          "alignItems": "center",
+          "fontSize": 15,
+          "marginBottom": 10,
+        }
+      }
+    >
       Time: 
       
     </Text>

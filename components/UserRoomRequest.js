@@ -44,19 +44,6 @@ export class UserRoomRequest extends Component {
     }
     sendRequest(room,startTime, endTime, currentTime, reason, event, groupid, userid) {
         console.log(room,startTime, endTime, currentTime, reason, event, groupid, userid);
-        /// The following code is just to simulate adding a room to the database so I test my stuff
-        // const addRoom = JSON.stringify(
-        //     {roomnumber: room}
-        // );
-        // axios.post('http://10.0.2.2:8000/room_mgmt/admin/add_room/', addRoom)
-        // .then(function (response) {
-        //   console.log(response);
-        // })
-        // .catch(function (error) {
-        //   console.log('oof')
-        //   console.log(error);
-        // });    
-        //////////////////END ZACH TESTING ROOM AREA////////////////////////////
         const request = JSON.stringify(
           { 
             userid:userid,
@@ -97,6 +84,15 @@ export class UserRoomRequest extends Component {
         this.getRooms();
           
       }
+
+      createRoomList(roomslist) {
+        let rooms =roomslist;
+        let temp = [];
+        for (let i = 0; i < rooms.length; i++) {
+            temp.push(rooms[i].roomnumber);
+        }
+        this.setState({roomList: temp})
+}
       getRooms(){
         axios.post('http://10.0.2.2:8000/room_mgmt/user/rooms/')
         // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
@@ -105,12 +101,9 @@ export class UserRoomRequest extends Component {
         // })
           .then(response => {
 
-              let rooms = response.data.roomslist;
-              let temp = [];
-              for (let i = 0; i < rooms.length; i++) {
-                  temp.push(rooms[i].roomnumber);
-              }
-              this.setState({roomList: temp})
+              
+              createRoomsList(response.data.roomslist);
+
           })
           .catch(function(error) {
               console.log(error)

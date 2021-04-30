@@ -7,13 +7,13 @@ import Adapter from 'enzyme-adapter-react-16';
 import AdminAddEvent from '../components/AdminAddEvent';
 import RoomSelectDropdown from '../components/RoomSelectDropdown';
 import UserTextInput from '../components/UserTextInput';
-import { RequestRoomUser} from '../screens/RequestRoomUser';
+
 import {setMinutes} from '../components/AdminAddEvent'
 import RepeatSelectDropdown from '../components/RepeatSelectDropdown';
-// test('Renders AdminAddEvent snapshot as expected', () => {
-//     const tree = renderer.create(<AdminAddEvent/>).toJSON();
-//     expect(tree).toMatchSnapshot();
-// });
+test('Renders AdminAddEvent snapshot as expected', () => {
+    const tree = renderer.create(<AdminAddEvent/>).toJSON();
+    expect(tree).toMatchSnapshot();
+});
 
 test('Minutes dropdown sends minutes to handler', () => {
     const onEventMock = jest.fn();
@@ -131,6 +131,44 @@ test('Repeat handler sets the state of the event', () => {
     expect(test.state('repeat')).toBe('Weekly');
 });
 
+test('Set Date', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<AdminAddEvent/>);
+    const instance = test.instance();
+    date = new Date(2021, 4,7,5,30,0,0)
+    instance.setDate(date);
+    expect(test.state('date')).toBe(date);
+});
+
+test('Set Value', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<AdminAddEvent/>);
+    const instance = test.instance();
+    value = '7'
+    instance.setValue(value);
+    expect(test.state('value')).toBe(value);
+});
+
+test('Create Room List', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<AdminAddEvent/>);
+    const instance = test.instance();
+    list = [{roomnumber: 5}, {roomnumber: 4}, {roomnumber: 3}]
+    answer = [5,4,3]
+    instance.createRoomList(list);
+    expect(test.state('roomList')).toStrictEqual(answer);
+});
+
+
+test('parseTime', () => {
+    Enzyme.configure({adapter: new Adapter()})
+    const test = shallow(<AdminAddEvent/>);
+    const instance = test.instance();
+    date = new Date(2021, 4, 7,4,30,25,0);
+    answer = instance.parseTime(date);
+    expect(answer === '2021-5-7 4:30');
+
+})
 // test('Event handler sets the state of the event', () => {
 //     Enzyme.configure({adapter: new Adapter()})
 //     const test = shallow(<AdminAddEvent/>);
