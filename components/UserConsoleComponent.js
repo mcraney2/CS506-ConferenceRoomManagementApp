@@ -33,6 +33,7 @@ export class UserConsoleComponent extends Component {
     // for the events for that room
     setRoom (newRoom) {
         this.setState({room : newRoom});
+        this.getEvents(newRoom);
     }
 
 
@@ -47,6 +48,52 @@ export class UserConsoleComponent extends Component {
         return total;
     }
 
+    getEvents(room) {
+        // Get all the events for the rooms
+        let date = new Date();
+        date = this.parseTime(date);
+        const request = JSON.stringify(
+            { 
+              date: date,
+              mode: "week",
+              roomnumber: room,
+            });
+          axios.post('http://10.0.2.2:8000/room_mgmt/user/calendar/', request)  
+          .then(response => {
+              console.log("Room Num: ");
+              console.log(response.data.roomnumber);
+              console.log("\nDateList: ")
+              console.log(response.data.datelist);
+              let date_list = response.data.datelist;
+              let events_temp = [];
+              for(let j = 0; j < date_list.length; j++) {
+
+                  let event_list = response.data.datelist[j].eventlist;
+
+                  for(let k = 0; k < event_list.length; k++) {
+                      let start_date = event_list[k].starttime;
+                      let end_date = event_list[k].endtime;
+                      let event_name = event_list[k].eventname;
+
+                      let event = {
+                          title: event_name, 
+                          start: new Date(start_date), 
+                          end: new Date(end_date)
+                      };
+
+                      events_temp.push(event);
+                  }
+              }
+              
+                this.updateEvents(events_temp);
+                console.log("All of the Events: \n" + events_temp);
+              
+            })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
     componentDidMount() {
         //console.log("Send database request to get requests")
         this.getRooms();
@@ -54,67 +101,13 @@ export class UserConsoleComponent extends Component {
       }
 
     getRooms(){
-        let events_all = [];
         axios.post('http://10.0.2.2:8000/room_mgmt/user/rooms/').then(response => {
               let rooms = response.data.roomslist;
               let temp = [];
               for (let i = 0; i < rooms.length; i++) {
                   temp.push(rooms[i].roomnumber);
               }
-              this.setState({roomList: temp});
-
-              // Get all the events for the rooms
-              let date = new Date();
-              date = this.parseTime(date);
-              for (let i = 0; i < rooms.length; i++) {
-                let room = rooms[i].roomnumber;
-                console.log(room, date);
-                const request = JSON.stringify(
-                  { 
-                    date: date,
-                    mode: "week",
-                    roomnumber: room,
-                });
-                axios.post('http://10.0.2.2:8000/room_mgmt/user/calendar/', request)  
-                .then(response => {
-                    console.log("Room Num: ");
-                    console.log(response.data.roomnumber);
-                    console.log("\nDateList: ")
-                    console.log(response.data.datelist);
-                    let date_list = response.data.datelist;
-                    let events_temp = [];
-                    for(let j = 0; j < date_list.length; j++) {
-
-                        let event_list = response.data.datelist[j].eventlist;
-
-                        for(let k = 0; k < event_list.length; k++) {
-                            let start_date = event_list[k].starttime;
-                            let end_date = event_list[k].endtime;
-                            let event_name = event_list[k].eventname;
-
-                            let event = {
-                                title: event_name, 
-                                start: new Date(start_date), 
-                                end: new Date(end_date)
-                            };
-
-                            events_temp.push(event);
-                        }
-                    }
-                    console.log("Push on to all events");
-                    events_all.push(events_temp);
-                    console.log(events_all + "\n");
-
-                    if(i == rooms.length - 1) {
-                        this.updateEvents(events_all);
-                        console.log("All of the Events: \n" + events_all);
-                    }
-                })
-                .catch(function (error) {
-                  console.log(error);
-                });
-              }
-
+              this.setState({roomList: temp});            
           })
           .catch(function(error) {
               console.log(error)
