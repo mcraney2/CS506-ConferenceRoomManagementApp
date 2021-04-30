@@ -10,6 +10,9 @@ import { Calendar } from 'react-native-big-calendar'
 import {resetUserGroup} from '../actions/GroupCodeActionCreators'
 import { connect } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
+
+
+
 export class UserConsoleComponent extends Component {
     
     constructor(props) {
@@ -49,14 +52,10 @@ export class UserConsoleComponent extends Component {
         this.getRooms();
           
       }
-      getRooms(){
-        axios.post('http://10.0.2.2:8000/room_mgmt/user/rooms/')
-        // fetch('http://10.0.2.2:8000/room_mgmt/user/rooms/', {
-        //     method: 'GET',
-        //     body: request
-        // })
-          .then(response => {
 
+    getRooms(){
+        let events_all = [];
+        axios.post('http://10.0.2.2:8000/room_mgmt/user/rooms/').then(response => {
               let rooms = response.data.roomslist;
               let temp = [];
               for (let i = 0; i < rooms.length; i++) {
@@ -67,7 +66,6 @@ export class UserConsoleComponent extends Component {
               // Get all the events for the rooms
               let date = new Date();
               date = this.parseTime(date);
-              let events_temp = [];
               for (let i = 0; i < rooms.length; i++) {
                 let room = rooms[i].roomnumber;
                 console.log(room, date);
@@ -88,16 +86,11 @@ export class UserConsoleComponent extends Component {
                     for(let j = 0; j < date_list.length; j++) {
 
                         let event_list = response.data.datelist[j].eventlist;
-                        console.log("Events List: \n" + event_list);
 
                         for(let k = 0; k < event_list.length; k++) {
                             let start_date = event_list[k].starttime;
                             let end_date = event_list[k].endtime;
                             let event_name = event_list[k].eventname;
-
-                            console.log("Event Name: \n" + event_name);
-                            console.log("Start Time: \n" + start_date);
-                            console.log("End Time: \n" + end_date);
 
                             let event = {
                                 title: event_name, 
@@ -105,25 +98,30 @@ export class UserConsoleComponent extends Component {
                                 end: new Date(end_date)
                             };
 
-                            console.log("Object Title: \n" + event.title + "\nStart : \n" + event.start + "\nEnd : \n" + event.end);
-                            console.log("Event: \n" + event);
-
                             events_temp.push(event);
                         }
                     }
-                    console.log("Events List: \n" + events_temp);
-                    this.updateEvents(events_temp);
+                    console.log("Push on to all events");
+                    events_all.push(events_temp);
+                    console.log(events_all + "\n");
+
+                    if(i == rooms.length - 1) {
+                        this.updateEvents(events_all);
+                        console.log("All of the Events: \n" + events_all);
+                    }
                 })
                 .catch(function (error) {
                   console.log(error);
                 });
               }
+
           })
           .catch(function(error) {
               console.log(error)
           })
-      }
-        parseTime(date) {
+    }
+
+    parseTime(date) {
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         if (Number(month) < 10) {
