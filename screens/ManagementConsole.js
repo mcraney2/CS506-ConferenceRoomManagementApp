@@ -62,7 +62,7 @@ export function ManagementConsole({navigation}) {
             <View style={styles.container2}>
                 <Button 
                     handleClick={() =>
-                        navigation.navigate('EditCalendarsAdmin')
+                        navigation.navigate('AddEventAdmin')
                     }
                     label="Edit Calendars"
                 />
